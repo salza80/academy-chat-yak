@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-
-  root 'sessions#established'
+  resources  :messages, only: [:index, :new, :create]
+  root 'messages#index'
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'

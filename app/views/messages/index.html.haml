@@ -1,0 +1,11 @@
+%h1= t "Yak Chat!"
+
+- @messages.each do |message|
+  = message.created_at.strftime('%H:%M:%S')
+  = message.body
+  %br
+
+=form_for @message do |f|
+  =f.label :body
+  =f.text_field :body
+  =f.submit "Send"
