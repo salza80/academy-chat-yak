@@ -1,28 +1,41 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+= Academy Chat Yak
 
-Things you may want to cover:
+== Description
 
-* Ruby version
+This is a simple chat application similar to Slack.
+This is a learning project as part of the Pilot Academy Program
 
-* System dependencies
+More about the project on {hackpad}[https://pilot.hackpad.com/Academy-Chat-Yak-cVxsQQVpYUg]
 
-* Configuration
+== System Dependencies
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Database: PostgreSQL : https://wiki.postgresql.org/wiki/Detailed_installation_guides
+* Ruby version 2.2.0, source: https://www.ruby-lang.org/en/documentation/installation/
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+== Application setup
+* Please copy <tt>`.env.example`</tt>  to <tt>`.env`</tt> and set all needed variables
+* Install all components
+* run command <tt>`bundle install`</tt>
+* Database setup
+  * please copy <tt>`database.yml.example`</tt> to <tt>`database.yml`</tt> and set all needed variables
+  * run command <tt>`./bin/rake db:create`</tt>
+  * run command <tt>`./bin/rake db:migrate`</tt>
+  * run command <tt>`./bin/rake db:seed`</tt>
+for project validation application setup run <tt>`./bin/rake spec`</tt>
+
+== How to run application and tests (test framework `Capybara`)
+* command to  run applicaiton <tt>`rails server start`</tt>
+* command to run tests <tt>`.bin/rake test`</tt>
+
+== Important Information
+
+== Deployment Instructions
+
+* deployment is automatically done by the {CI}[https://semaphoreci.com/pilot/academy-chat-yak/] after `git push`
+
+== Code Conventions
+* Please use {style guide}[https://pilot.hackpad.com/Code-style-guides-OeBefd9IEvZ]
+
