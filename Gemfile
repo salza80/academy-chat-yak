@@ -31,6 +31,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'haml-rails', '>= 0.3.4'
 
+
 gem 'react-rails', '~> 1.0'
 
 # Use omniauth for github authentication
@@ -60,7 +61,10 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
+  gem 'capybara'
+
   # Rspec for testing with data sampled with factory girl gem
   gem 'rspec-rails', '~> 3.0'
-  gem 'factory_girl'
+
+  gem "factory_girl_rails", "~> 4.0" 
 end

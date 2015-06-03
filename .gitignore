@@ -16,11 +16,12 @@
 !/log/.keep
 /tmp
 /config/database.yml
-<<<<<<< HEAD
 /public/assets
 /views/messages/.index.html.haml.swo
-
-=======
 /views/*.swo
 /config/initializers/app_env_vars.rb
->>>>>>> 41c593609f8b7d57bc487f673621155b533f2b2d
+
+#Ignore all swapfiles
+*.swp
+*.swo
+
