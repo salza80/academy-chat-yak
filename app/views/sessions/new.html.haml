@@ -1,5 +1,2 @@
-= form_tag login_path do
-  %p
-    = label_tag :name
-    = text_field_tag :name
-  = submit_tag 'Log in'
+%p You have to be logged in to chat!
+= button_to 'Log in with Github', 'auth/github'

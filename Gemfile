@@ -30,7 +30,14 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'haml-rails', '>= 0.3.4'
+
 gem 'react-rails', '~> 1.0'
+
+# Use omniauth for github authentication
+gem 'omniauth-github'
+gem 'omniauth-openid'
+
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -52,5 +59,8 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-end
 
+  # Rspec for testing with data sampled with factory girl gem
+  gem 'rspec-rails', '~> 3.0'
+  gem 'factory_girl'
+end
