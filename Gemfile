@@ -41,6 +41,9 @@ gem 'omniauth-openid'
 # Use dotenv to keep environment variables
 gem 'dotenv'
 
+#Use rollbar
+gem 'rollbar', '~> 1.5.1'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
