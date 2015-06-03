@@ -65,6 +65,8 @@ group :development, :test do
 
   gem 'capybara'
 
+  gem 'selenium-webdriver'
+
   # Rspec for testing with data sampled with factory girl gem
   gem 'rspec-rails', '~> 3.0'
 
