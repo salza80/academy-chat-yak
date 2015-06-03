@@ -16,5 +16,8 @@
 !/log/.keep
 /tmp
 /config/database.yml
-/views/*.swo
 /config/initializers/app_env_vars.rb
+
+#Ignore all swapfiles
+*.swp
+*.swo
