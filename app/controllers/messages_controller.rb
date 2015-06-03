@@ -3,8 +3,7 @@ class MessagesController < ApplicationController
   before_action :logged_in
 
   def index
-
-    @messages = Message.all.where(user_id: session[:id])
+    @messages = Message.all.where(user_id: current_user.id)
     @message = Message.new
     respond_to do |format|
       format.html

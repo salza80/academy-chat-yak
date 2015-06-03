@@ -38,6 +38,8 @@ gem 'react-rails', '~> 1.0'
 gem 'omniauth-github'
 gem 'omniauth-openid'
 
+# Use dotenv to keep environment variables
+gem 'dotenv'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -62,6 +64,8 @@ group :development, :test do
   gem 'spring'
 
   gem 'capybara'
+
+  gem 'selenium-webdriver'
 
   # Rspec for testing with data sampled with factory girl gem
   gem 'rspec-rails', '~> 3.0'
