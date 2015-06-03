@@ -17,6 +17,22 @@
 
 //= require react_ujs
 //= require components
+//= require jquery
+
+ // var sid = $("meta[name='csrf-token']").find("content").val()
+
+ 
+ 
+ function getRequestHeader(){
+
+  var sid = $("meta[name='csrf-token']").attr("content"); 
+      console.log("id", sid)
+      var myHeaders = new Headers();
+      myHeaders.append("X-CSRF-Token",sid);
+
+      var myInit = { method: 'GET', headers: myHeaders};
+      return myInit
+ }
 
 
 
@@ -31,4 +47,5 @@ function status(response) {
 function json(response) {  
   return response.json()  
 }
+
 

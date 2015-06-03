@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   def logged_in
 
-    redirect_to login_path if session[:id].nil? and request.format.html? 
+    redirect_to login_path if session[:id].nil?
  
   end
 end

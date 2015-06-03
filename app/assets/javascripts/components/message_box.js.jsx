@@ -6,7 +6,7 @@ var MessageBox = React.createClass({
     ]};
   },
    componentDidMount: function() {
-    fetch('messages.json')  
+    fetch('messages.json', {credentials: 'include' })  
     .then(status)  
     .then(json)  
     .then(function(data) {  
