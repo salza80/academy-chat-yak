@@ -17,3 +17,5 @@
 /tmp
 /config/database.yml
 /public/assets
+/views/messages/.index.html.haml.swo
+

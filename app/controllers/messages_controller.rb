@@ -1,4 +1,6 @@
 class MessagesController < ApplicationController
+  before_action :logged_in
+
   def index
     @messages = Message.all
     @message = Message.new
@@ -10,6 +12,7 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.new message_params
+    @message.user = current_user
     @message.save
     redirect_to '/'
   end
