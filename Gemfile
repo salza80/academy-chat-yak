@@ -31,9 +31,13 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'haml-rails', '>= 0.3.4'
 
+
+gem 'react-rails', '~> 1.0'
+
 # Use omniauth for github authentication
 gem 'omniauth-github'
 gem 'omniauth-openid'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -10,7 +10,25 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require jquery_ujs
 //= require turbolinks
-//= require_tree .
+//= require react
+
+//= require_tree
+
+//= require react_ujs
+//= require components
+
+
+
+function status(response) {  
+  if (response.status >= 200 && response.status < 300) {  
+    return Promise.resolve(response)  
+  } else {  
+    return Promise.reject(new Error(response.statusText))  
+  }  
+}
+
+function json(response) {  
+  return response.json()  
+}
+
