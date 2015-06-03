@@ -20,7 +20,6 @@
 
 
 
-
 function status(response) {  
   if (response.status >= 200 && response.status < 300) {  
     return Promise.resolve(response)  
@@ -32,5 +31,4 @@ function status(response) {
 function json(response) {  
   return response.json()  
 }
-
 

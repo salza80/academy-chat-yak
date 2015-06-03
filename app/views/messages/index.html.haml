@@ -1,7 +1,10 @@
 %h1= t "Yak Chat!"
 = react_component('MessageBox')
 
-
+/ - @messages.each do |message|
+/   = message.created_at.strftime('%H:%M:%S')
+/   = message.body
+/   %br
 
 =form_for @message do |f|
   =f.label :body

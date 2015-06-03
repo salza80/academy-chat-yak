@@ -1,3 +1,4 @@
+/** @jsx React.DOM */
 var MessageBox = React.createClass({
   getInitialState: function() {
     return {data: [

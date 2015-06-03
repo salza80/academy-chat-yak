@@ -2,6 +2,7 @@ class MessagesController < ApplicationController
   before_action :logged_in
 
   def index
+
     @messages = Message.all
     @message = Message.new
     respond_to do |format|

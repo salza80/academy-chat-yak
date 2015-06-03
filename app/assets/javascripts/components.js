@@ -1,19 +1,1 @@
 //= require_tree ./components
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
