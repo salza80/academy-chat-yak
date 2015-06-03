@@ -19,10 +19,7 @@
 //= require components
 //= require jquery
 
- // var sid = $("meta[name='csrf-token']").find("content").val()
-
- 
- 
+  
  function getRequestHeader(){
 
   var sid = $("meta[name='csrf-token']").attr("content"); 
@@ -33,8 +30,6 @@
       var myInit = { method: 'GET', headers: myHeaders};
       return myInit
  }
-
-
 
 function status(response) {  
   if (response.status >= 200 && response.status < 300) {  
