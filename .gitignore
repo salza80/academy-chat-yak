@@ -16,4 +16,4 @@
 !/log/.keep
 /tmp
 /config/database.yml
-/views/messages/.index.html.haml.swo
+/views/*.swo
