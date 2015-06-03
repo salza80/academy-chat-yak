@@ -12,11 +12,8 @@
 //
 //= require turbolinks
 //= require react
-
 //= require_tree
-
 //= require react_ujs
-//= require components
 //= require jquery
 
   
@@ -26,13 +23,12 @@
       console.log("id", sid)
       var myHeaders = new Headers();
       myHeaders.append("X-CSRF-Token",sid);
-
       var myInit = { method: 'GET', headers: myHeaders};
       return myInit
  }
 
 function status(response) {  
-  if (response.status >= 200 && response.status < 300) {  
+  if (response.status == 200) {  
     return Promise.resolve(response)  
   } else {  
     return Promise.reject(new Error(response.statusText))  
@@ -42,5 +38,3 @@ function status(response) {
 function json(response) {  
   return response.json()  
 }
-
-

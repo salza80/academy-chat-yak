@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var MessageBox = React.createClass({
   getInitialState: function() {
     return {data: [
@@ -18,7 +17,7 @@ var MessageBox = React.createClass({
   render: function() {
      console.log('Request succeeded with JSON response', this.state.data); 
     return (
-      <div className="messageBox">
+      <div className="message-box">
         <h1>Messages</h1>
        <MessageList data={this.state.data} />
       </div>

@@ -1,8 +1,7 @@
-###* @jsx React.DOM ###
 @Message = React.createClass
   render: ->
-    `<div className="Message">
-      <span className="created_at">
+    `<div className="message">
+      <span className="message-head">
         {this.props.created_at}
       </span>
       {this.props.body}
