@@ -7,8 +7,6 @@ class ApplicationController < ActionController::Base
   end
 
   def logged_in
-
     redirect_to login_path if session[:id].nil?
- 
   end
 end

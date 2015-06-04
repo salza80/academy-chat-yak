@@ -20,6 +20,7 @@
 /views/messages/.index.html.haml.swo
 /views/*.swo
 /config/initializers/app_env_vars.rb
+/var.env
 
 #Ignore all swapfiles
 *.swp
