@@ -10,6 +10,7 @@ module Yak
   class Application < Rails::Application
     # Load environment variables
     Dotenv.load Rails.root.join('var.env')
+    config.web_console.whitelisted_ips = '192.168.0.0/16'
     
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
