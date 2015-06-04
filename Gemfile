@@ -44,6 +44,9 @@ gem 'dotenv'
 #Use rollbar
 gem 'rollbar', '~> 1.5.1'
 
+#Use pusher to send messages to browser
+gem 'pusher'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
