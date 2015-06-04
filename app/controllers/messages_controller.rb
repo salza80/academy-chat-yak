@@ -3,11 +3,11 @@ class MessagesController < ApplicationController
   before_action :logged_in
 
   def index
-    @messages = Message.all.where(user_id: current_user.id)
+    @messages = Message.all
     @message = Message.new
     respond_to do |format|
       format.html
-      format.json { render json: @messages }
+      format.json { render json: @messages, :include => :user }
     end
   end
 
@@ -15,6 +15,9 @@ class MessagesController < ApplicationController
     @message = Message.new message_params
     @message.user = current_user
     @message.save
+    Pusher.url = "http://fdac954e72641ea1c7c7:1e5b8ed7a5ce477638db@api.pusherapp.com/apps/123041"
+
+    Pusher['test_channel'].trigger('my_event', {})
     redirect_to '/'
   end
 
