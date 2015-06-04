@@ -1,8 +1,6 @@
 var MessageBox = React.createClass({
   getInitialState: function() {
-    return {data: [
-      {"body":"you don't have any messages yet!", "created_at":""}
-    ]};
+    return {data: []};
   },
   handleMessageSubmit: function(message) {
     $.ajax({
@@ -15,11 +13,24 @@ var MessageBox = React.createClass({
       }.bind(this)
     });
   },
-  componentDidMount: function() {
+
+  fetchMessagesFromServer: function() {
     $.get("messages.json", function(result) {
-      this.setState({data: result})
+      this.setState({data: result});
     }.bind(this));
   },
+
+  componentDidMount: function() {
+    var that = this
+    this.fetchMessagesFromServer();
+
+    var pusher = new Pusher('fdac954e72641ea1c7c7');
+    var channel = pusher.subscribe('test_channel');
+    channel.bind('my_event', function() {
+      this.fetchMessagesFromServer();
+    }.bind(this));
+  },
+
   render: function() {
     console.log('Request succeeded with JSON response', this.state.data); 
     return (

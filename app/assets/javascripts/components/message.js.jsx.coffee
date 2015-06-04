@@ -1,9 +1,12 @@
 @Message = React.createClass
   render: ->
     `<div className="message">
-      <span className="message-head">
+      <div className="message-head">
+        {this.props.user}&nbsp;
         {this.props.created_at}
-      </span>
+      </div>
+      <div className="message-body">
       {this.props.body}
+      </div>
     </div>`
 
