@@ -6,6 +6,6 @@
     React.findDOMNode(this.refs.body).value = ''
   render: ->
     `<form className="messageForm" onSubmit={this.handleSubmit}>
-      <input type="text" placeholder="Enter message" ref="body" />
-      <input type="submit" value="Post" />
+      <input id="Body" type="text" placeholder="Enter message" ref="body" />
+      <input type="submit" value="Send" />
     </form>`
