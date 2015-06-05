@@ -1,6 +1,6 @@
 var MessageBox = React.createClass({
   getInitialState: function() {
-    return {data: []};
+    return {data: {messages: []}};
   },
   handleMessageSubmit: function(message) {
     $.ajax({
