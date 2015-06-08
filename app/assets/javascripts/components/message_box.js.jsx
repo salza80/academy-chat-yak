@@ -3,56 +3,34 @@ var MessageBox = React.createClass({
     return {data: {messages: []}};
   },
   handleMessageSubmit: function(message) {
-    // console.log(message)
-    // console.log(JSON.stringify({message}))
-    if(self.fetch) {
-      console.log("fetch post")
-      fetch('messages.json', {  
-        credentials: 'include',
-        method: 'post',  
-        headers: {  
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },  
-        body: JSON.stringify({message})
-      })
-      .then(json)  
-      .then(function (data) {  
-        console.log('Request succeeded with JSON response', data);  
-      }.bind(this))  
-      .catch(function (error) {  
-        console.log('Request failed', error);  
-      });
-    } else {
-       console.log("jquery post")
-      $.ajax({
-        url: 'messages.json',
-        dataType: 'json',
-        type: 'POST',
-        data: {message: message},
-        success: function(data) {
-          console.log('Request succeeded with JSON response', data); 
-        }.bind(this)
-      });
-    }
+    console.log("fetch post")
+    fetch('messages.json', {  
+      credentials: 'include',
+      method: 'post',  
+      headers: {  
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },  
+      body: JSON.stringify({message})
+    })
+    .then(json)  
+    .then(function (data) {  
+      console.log('Request succeeded with JSON response', data);  
+    }.bind(this))  
+    .catch(function (error) {  
+      console.log('Request failed', error);  
+    });
   },
   fetchMessagesFromServer: function() {
-    if(self.fetch) {
-      console.log("fetch get")
-      fetch('messages.json', {credentials: 'include' })  
-      .then(status)  
-      .then(json)  
-      .then(function(data) {  
-        this.setState({data: data}); 
-      }.bind(this)).catch(function(error) {  
-        console.log('Request failed', error);  
-      });
-    } else {
-      console.log("jquery get")
-      $.get("messages.json", function(result) {
-        this.setState({data: result}) 
-      }.bind(this));
-    }
+    console.log("fetch get")
+    fetch('messages.json', {credentials: 'include' })  
+    .then(status)  
+    .then(json)  
+    .then(function(data) {  
+      this.setState({data: data}); 
+    }.bind(this)).catch(function(error) {  
+      console.log('Request failed', error);  
+    });
   },   
   componentDidMount: function() {
     var that = this
