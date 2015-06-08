@@ -11,7 +11,7 @@ var MessageBox = React.createClass({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },  
-      body: JSON.stringify({message})
+      body: JSON.stringify(message)
     })
     .then(json)  
     .then(function (data) {  

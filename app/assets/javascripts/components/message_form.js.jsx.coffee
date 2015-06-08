@@ -2,7 +2,7 @@
   handleSubmit: (e) ->
     e.preventDefault()
     body = React.findDOMNode(this.refs.body).value.trim()
-    this.props.onMessageSubmit({body: body})
+    this.props.onMessageSubmit({message:{body: body}})
     React.findDOMNode(this.refs.body).value = ''
   render: ->
     `<form className="message-form" onSubmit={this.handleSubmit}>
