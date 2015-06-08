@@ -14,6 +14,8 @@
 <%= yield %>
 <% if current_user %>
   <%= button_to 'Log out', logout_path, method: :delete %>
+<% else %>
+  <%= render 'sessions/new' %>
 <% end %>
 
 </body>

@@ -18,7 +18,6 @@ var MessageBox = React.createClass({
       })
       .then(json)  
       .then(function (data) {  
-        // this.setState({data: data}); 
         console.log('Request succeeded with JSON response', data);  
       }.bind(this))  
       .catch(function (error) {  
@@ -88,3 +87,4 @@ var MessageBox = React.createClass({
     //   }.bind(this)
     // });
   // },
+
