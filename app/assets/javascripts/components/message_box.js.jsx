@@ -5,33 +5,56 @@ var MessageBox = React.createClass({
   handleMessageSubmit: function(message) {
     // console.log(message)
     // console.log(JSON.stringify({message}))
- fetch('messages.json', {  
-      credentials: 'include',
-      method: 'post',  
-      headers: {  
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },  
-      body: JSON.stringify({message})
-    })
-    .then(json)  
-    .then(function (data) {  
-      console.log('Request succeeded with JSON response', data);  
-    })  
-    .catch(function (error) {  
-      console.log('Request failed', error);  
-    });
+    if(self.fetch) {
+      console.log("fetch post")
+      fetch('messages.json', {  
+        credentials: 'include',
+        method: 'post',  
+        headers: {  
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },  
+        body: JSON.stringify({message})
+      })
+      .then(json)  
+      .then(function (data) {  
+        // this.setState({data: data}); 
+        console.log('Request succeeded with JSON response', data);  
+      }.bind(this))  
+      .catch(function (error) {  
+        console.log('Request failed', error);  
+      });
+    } else {
+       console.log("jquery post")
+      $.ajax({
+        url: 'messages.json',
+        dataType: 'json',
+        type: 'POST',
+        data: {message: message},
+        success: function(data) {
+          console.log('Request succeeded with JSON response', data); 
+        }.bind(this)
+      });
+    }
   },
-  fetchMessagesFromServer:  function() {
-    fetch('messages.json', {credentials: 'include' })  
-    .then(status)  
-    .then(json)  
-    .then(function(data) {  
-      this.setState({data: data}); 
-    }.bind(this)).catch(function(error) {  
-      console.log('Request failed', error);  
-    });
-  },
+  fetchMessagesFromServer: function() {
+    if(self.fetch) {
+      console.log("fetch get")
+      fetch('messages.json', {credentials: 'include' })  
+      .then(status)  
+      .then(json)  
+      .then(function(data) {  
+        this.setState({data: data}); 
+      }.bind(this)).catch(function(error) {  
+        console.log('Request failed', error);  
+      });
+    } else {
+      console.log("jquery get")
+      $.get("messages.json", function(result) {
+        this.setState({data: result}) 
+      }.bind(this));
+    }
+  },   
   componentDidMount: function() {
     var that = this
     this.fetchMessagesFromServer();
@@ -55,13 +78,13 @@ var MessageBox = React.createClass({
 });
 
 
-  //   $.ajax({
-  //     url: 'messages.json',
-  //     dataType: 'json',
-  //     type: 'POST',
-  //     data: message,
-  //     success: function(data) {
-  //       this.setState({data: data});
-  //     }.bind(this)
-  //   });
+    // $.ajax({
+    //   url: 'messages.json',
+    //   dataType: 'json',
+    //   type: 'POST',
+    //   data: message,
+    //   success: function(data) {
+    //     this.setState({data: data});
+    //   }.bind(this)
+    // });
   // },

@@ -14,6 +14,7 @@
 //= require react
 //= require_tree
 //= require react_ujs
+//= require jquery
 
 function status(response) {  
   if (response.status == 200) {  
