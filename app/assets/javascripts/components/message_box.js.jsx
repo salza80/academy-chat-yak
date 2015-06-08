@@ -3,9 +3,7 @@ var MessageBox = React.createClass({
     return {data: {messages: []}};
   },
   handleMessageSubmit: function(message) {
-    // console.log(message)
-    // console.log(JSON.stringify({message}))
- fetch('messages.json', {  
+    fetch('messages.json', {  
       credentials: 'include',
       method: 'post',  
       headers: {  
@@ -29,7 +27,7 @@ var MessageBox = React.createClass({
     .then(function(data) {  
       this.setState({data: data}); 
     }.bind(this)).catch(function(error) {  
-      console.log('Request failed', error);  
+      console.log('Request failed', error);
     });
   },
   componentDidMount: function() {
@@ -53,15 +51,3 @@ var MessageBox = React.createClass({
     );
   }
 });
-
-
-  //   $.ajax({
-  //     url: 'messages.json',
-  //     dataType: 'json',
-  //     type: 'POST',
-  //     data: message,
-  //     success: function(data) {
-  //       this.setState({data: data});
-  //     }.bind(this)
-  //   });
-  // },
