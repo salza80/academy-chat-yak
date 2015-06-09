@@ -1,6 +1,6 @@
 @MessageList = React.createClass(render: ->
-  messageNodes = @props.data.map((message) ->
-    `<Message user = {message.user.name} created_at={message.created_at} body = {message.body}></Message>`
+  messageNodes = @props.data.messages.map((message) ->
+    `<Message user={message.user} created_at={message.created_at} body = {message.body} key={message.id} ></Message>`
   )
   `<div className="message-list">
     {messageNodes}

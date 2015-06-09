@@ -1,4 +1,3 @@
-# spec/models/contact.rb
 require 'spec_helper' 
 describe ::Message do
   let(:message) { FactoryGirl.create :message }

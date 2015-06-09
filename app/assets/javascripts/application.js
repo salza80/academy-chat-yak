@@ -9,32 +9,11 @@
 //
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
-//
+//= require_self
 //= require turbolinks
 //= require react
 //= require_tree
 //= require react_ujs
-//= require jquery
 
-  
- function getRequestHeader(){
+var Yak = {};
 
-  var sid = $("meta[name='csrf-token']").attr("content"); 
-      console.log("id", sid)
-      var myHeaders = new Headers();
-      myHeaders.append("X-CSRF-Token",sid);
-      var myInit = { method: 'GET', headers: myHeaders};
-      return myInit
- }
-
-function status(response) {  
-  if (response.status == 200) {  
-    return Promise.resolve(response)  
-  } else {  
-    return Promise.reject(new Error(response.statusText))  
-  }  
-}
-
-function json(response) {  
-  return response.json()  
-}
