@@ -1,8 +1,10 @@
-Backend = function(){
+
+
+Yak.Backend = function(){
 
 }
 
-Backend.prototype.status = function(response) {  
+Yak.Backend.prototype.status = function(response) {  
   if (response.status == 200) {  
     return Promise.resolve(response);
   } else {  
@@ -10,15 +12,15 @@ Backend.prototype.status = function(response) {
   }  
 };
 
-Backend.prototype.json = function(response) {  
+Yak.Backend.prototype.json = function(response) {  
   return response.json();
 };
 
-Backend.prototype.error = function(response) {
+Yak.Backend.prototype.error = function(response) {
    console.log('Request failed', response);
 };
 
-Backend.prototype.fetch = function(url) {
+Yak.Backend.prototype.fetch = function(url) {
   return fetch(url, {credentials: 'include' })  
           .then(this.status)  
           .then(this.json)
@@ -29,7 +31,7 @@ Backend.prototype.fetch = function(url) {
           .catch(this.error);
 };
 
-Backend.prototype.postJSON = function(url, jsonData) {
+Yak.Backend.prototype.postJSON = function(url, jsonData) {
   return fetch(url, {  
                       credentials: 'include',
                       method: 'post',  

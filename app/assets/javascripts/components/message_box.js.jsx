@@ -12,9 +12,9 @@ var MessageBox = React.createClass({
   },   
   componentDidMount: function() {
     var that = this
-    this.backend = new Backend();
+    this.backend = new Yak.Backend();
     this.fetchMessagesFromServer();
-    var push =  new pusherInit();
+    var push =  new Yak.pusherInit();
     push.channel.bind('my_event', function() {
       this.fetchMessagesFromServer();
     }.bind(this));
