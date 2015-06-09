@@ -35,10 +35,8 @@ var MessageBox = React.createClass({
   componentDidMount: function() {
     var that = this
     this.fetchMessagesFromServer();
-
-    var pusher = new Pusher('fdac954e72641ea1c7c7');
-    var channel = pusher.subscribe('test_channel');
-    channel.bind('my_event', function() {
+    var push =  new pusherInit();
+    push.channel.bind('my_event', function() {
       this.fetchMessagesFromServer();
     }.bind(this));
   },
