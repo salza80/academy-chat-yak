@@ -1,6 +1,3 @@
 %h1= t "Yak Chat!"
-- if current_user
-  = react_component('MessageBox')
-  = button_to 'Log out', logout_path, method: :delete
-- else
-  = render 'sessions/new'
+= react_component('MessageBox')
+= button_to 'Log out', logout_path, method: :delete

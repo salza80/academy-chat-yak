@@ -3,6 +3,7 @@ class MessagesController < ApplicationController
   # before_action :logged_in, only: :index
 
   def index
+    render partial: 'sessions/new' and return if current_user.nil?
     @messages = Message.all
     @message = Message.new
     respond_to do |format|
