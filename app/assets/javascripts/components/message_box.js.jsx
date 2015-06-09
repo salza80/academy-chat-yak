@@ -1,36 +1,19 @@
 var MessageBox = React.createClass({
+  getBackend: function(){
+    return new Backend();
+  },
   getInitialState: function() {
     return {data: {messages: []}};
   },
   handleMessageSubmit: function(message) {
-    console.log("fetch post")
-    fetch('messages.json', {  
-      credentials: 'include',
-      method: 'post',  
-      headers: {  
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },  
-      body: JSON.stringify(message)
-    })
-    .then(json)  
-    .then(function (data) {  
-      console.log('Request succeeded with JSON response', data);  
-    }.bind(this))  
-    .catch(function (error) {  
-      console.log('Request failed', error);  
-    });
+    backend = this.getBackend();
+    backend.postJSON('messages.json', message)
   },
   fetchMessagesFromServer: function() {
-    console.log("fetch get")
-    fetch('messages.json', {credentials: 'include' })  
-    .then(status)  
-    .then(json)  
-    .then(function(data) {  
+    backend = this.getBackend();
+    backend.fetch('messages.json').then(function(data){
       this.setState({data: data}); 
-    }.bind(this)).catch(function(error) {  
-      console.log('Request failed', error);  
-    });
+    }.bind(this))    
   },   
   componentDidMount: function() {
     var that = this
@@ -41,7 +24,6 @@ var MessageBox = React.createClass({
     }.bind(this));
   },
   render: function() {
-    console.log('Request succeeded with JSON response', this.state.data); 
     return (
       <div className="message-box">
         <h1>Messages</h1>
@@ -51,16 +33,3 @@ var MessageBox = React.createClass({
     );
   }
 });
-
-
-    // $.ajax({
-    //   url: 'messages.json',
-    //   dataType: 'json',
-    //   type: 'POST',
-    //   data: message,
-    //   success: function(data) {
-    //     this.setState({data: data});
-    //   }.bind(this)
-    // });
-  // },
-
