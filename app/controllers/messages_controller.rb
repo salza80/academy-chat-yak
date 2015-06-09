@@ -18,7 +18,7 @@ class MessagesController < ApplicationController
     Pusher.url = "http://fdac954e72641ea1c7c7:1e5b8ed7a5ce477638db@api.pusherapp.com/apps/123041"
 
     Pusher['test_channel'].trigger('my_event', {})
-    redirect_to '/'
+    
   end
 
   private
