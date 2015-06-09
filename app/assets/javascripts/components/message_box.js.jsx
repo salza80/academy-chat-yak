@@ -1,22 +1,18 @@
 var MessageBox = React.createClass({
-  getBackend: function(){
-    return new Backend();
-  },
   getInitialState: function() {
     return {data: {messages: []}};
   },
   handleMessageSubmit: function(message) {
-    backend = this.getBackend();
-    backend.postJSON('messages.json', message)
+    this.backend.postJSON('messages.json', message)
   },
   fetchMessagesFromServer: function() {
-    backend = this.getBackend();
-    backend.fetch('messages.json').then(function(data){
+    this.backend.fetch('messages.json').then(function(data){
       this.setState({data: data}); 
     }.bind(this))    
   },   
   componentDidMount: function() {
     var that = this
+    this.backend = new Backend();
     this.fetchMessagesFromServer();
     var push =  new pusherInit();
     push.channel.bind('my_event', function() {
