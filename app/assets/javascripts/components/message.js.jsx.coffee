@@ -1,4 +1,4 @@
-@Message = React.createClass
+Yak.Components.Message = React.createClass
   render: ->
     `<div className="message">
       <div className="message-head">

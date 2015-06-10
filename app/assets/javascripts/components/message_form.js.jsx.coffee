@@ -1,4 +1,4 @@
-@MessageForm = React.createClass
+Yak.Components.MessageForm = React.createClass
   handleSubmit: (e) ->
     e.preventDefault()
     body = React.findDOMNode(this.refs.body).value.trim()

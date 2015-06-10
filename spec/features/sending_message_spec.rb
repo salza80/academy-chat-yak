@@ -21,7 +21,7 @@ feature "Sending message", :type => :feature do
 
   scenario "Server sends a message" do
     sleep 2
-    Pusher.url = "http://fdac954e72641ea1c7c7:1e5b8ed7a5ce477638db@api.pusherapp.com/apps/123041"
+    Pusher.url = ENV['PUSHER_URL']
     Pusher.trigger "test_channel", "my_event", '{"body":"hello you!","created_at":"2015-06-04T10:35:42.778Z","user":{"name":"franek"}}'
     screenshot_and_save_page
     expect(page).to have_content("hello you!")

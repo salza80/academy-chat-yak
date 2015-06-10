@@ -1,4 +1,4 @@
-var MessageBox = React.createClass({
+Yak.Components.MessageBox = React.createClass({
   getInitialState: function() {
     return {data: {messages: []}};
   },
@@ -24,8 +24,8 @@ var MessageBox = React.createClass({
     return (
       <div className="message-box">
         <h1>Messages</h1>
-        <MessageList data={this.state.data} />
-        <MessageForm onMessageSubmit={this.handleMessageSubmit} />
+        <Yak.Components.MessageList data={this.state.data} />
+        <Yak.Components.MessageForm onMessageSubmit={this.handleMessageSubmit} />
       </div>
     );
   }

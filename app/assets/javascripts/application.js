@@ -16,4 +16,5 @@
 //= require react_ujs
 
 var Yak = {};
+Yak.Components = {};
 
