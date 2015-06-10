@@ -16,7 +16,7 @@ More about the project on {hackpad}[https://pilot.hackpad.com/Academy-Chat-Yak-c
 
 
 == Application setup
-* Please copy <tt>`.env.example`</tt>  to <tt>`.env`</tt> and set all needed variables
+* Please copy <tt>`var.env.sample`</tt>  to <tt>`var.env`</tt> and set all needed variables
 * Install all components
 * run command <tt>`bundle install`</tt>
 * Database setup
