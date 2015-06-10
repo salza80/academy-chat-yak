@@ -11,7 +11,6 @@ var MessageBox = React.createClass({
     }.bind(this))    
   },   
   componentDidMount: function() {
-    var that = this
     this.backend = new Yak.Backend();
     this.fetchMessagesFromServer();
     var push =  new Yak.pusherInit();
