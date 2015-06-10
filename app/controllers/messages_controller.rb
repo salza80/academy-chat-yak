@@ -16,9 +16,8 @@ class MessagesController < ApplicationController
     @message = Message.new message_params
     @message.user = current_user
     @message.save
-    Pusher.url = "http://fdac954e72641ea1c7c7:1e5b8ed7a5ce477638db@api.pusherapp.com/apps/123041" 
+    Pusher.url = ENV['PUSHER_URL']
     Pusher['test_channel'].trigger('my_event',  render_to_string(partial: 'messages/message.json', locals: { message: @message}))
-
   end
 
   private
