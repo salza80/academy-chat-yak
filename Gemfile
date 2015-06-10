@@ -81,4 +81,6 @@ group :development, :test do
   gem 'database_cleaner'
 
   gem 'pusher-fake'
+
+  gem 'capybara-screenshot'
 end

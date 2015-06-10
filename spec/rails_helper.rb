@@ -4,6 +4,11 @@ require 'spec_helper'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'capybara/rspec'
+require 'capybara-screenshot/rspec'
+
+Dir[File.expand_path("../support/**/*.rb", __FILE__)].each do |file|
+    require file
+end
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in

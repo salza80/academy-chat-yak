@@ -1,7 +1,7 @@
 require "rails_helper"
-
+require 'pusher'
 feature "Sending message", :type => :feature do
-  before(:all) do
+  before(:each) do
     Capybara.current_driver = :selenium
     OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new({
                   provider: 'github',
@@ -19,8 +19,23 @@ feature "Sending message", :type => :feature do
     expect(page).to have_text("Hello world!")
   end
 
-  after(:all) do
+  scenario "Server sends a message" do
+    sleep 2
+    Pusher.url = "http://fdac954e72641ea1c7c7:1e5b8ed7a5ce477638db@api.pusherapp.com/apps/123041"
+    Pusher.trigger "test_channel", "my_event", '{"body":"hello you!","created_at":"2015-06-04T10:35:42.778Z","user":{"name":"franek"}}'
+    screenshot_and_save_page
+    expect(page).to have_content("hello you!")
+    screenshot_and_save_page
+  end
+
+  after(:each) do
     OmniAuth.config.mock_auth[:github] = nil
     Capybara.reset!
+  end
+
+  protected
+
+  def trigger(channel, event, data)
+    Pusher.trigger(channel, event, data)
   end
 end

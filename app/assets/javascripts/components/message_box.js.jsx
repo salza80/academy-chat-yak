@@ -15,8 +15,10 @@ var MessageBox = React.createClass({
     this.backend = new Yak.Backend();
     this.fetchMessagesFromServer();
     var push =  new Yak.pusherInit();
-    push.channel.bind('my_event', function() {
-      this.fetchMessagesFromServer();
+    push.channel.bind('my_event', function(message) {
+      var messages = this.state.data.messages;
+      var newMessages = { messages : messages.concat(message) };
+      this.setState({data: newMessages});
     }.bind(this));
   },
   render: function() {
