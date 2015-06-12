@@ -11,6 +11,7 @@
 // about supported directives.
 //= require_self
 //= require pusher.min
+//= require fetch
 //= require turbolinks
 //= require react
 //= require_tree
