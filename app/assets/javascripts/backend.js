@@ -16,16 +16,13 @@ Yak.Backend.prototype.json = function(response) {
   return response.json();
 };
 
-Yak.Backend.prototype.error = function(response) {
-   console.log('Request failed', response);
-};
+Yak.Backend.prototype.error = function(response) {};
 
 Yak.Backend.prototype.fetch = function(url) {
   return fetch(url, {credentials: 'include' })  
   .then(this.status)  
   .then(this.json)
   .then(function(data) {
-    console.log('Get request succeeded with JSON response', data);  
     return Promise.resolve(data);   
   })
   .catch(this.error);
