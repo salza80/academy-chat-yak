@@ -1,7 +1,11 @@
 
 
 Yak.Backend = function(){
+  this.path = '/api/'
 
+}
+Yak.Backend.prototype.getPath = function(url){
+  return this.path.concat(url)
 }
 
 Yak.Backend.prototype.status = function(response) {  
@@ -19,7 +23,7 @@ Yak.Backend.prototype.json = function(response) {
 Yak.Backend.prototype.error = function(response) {};
 
 Yak.Backend.prototype.fetch = function(url) {
-  return fetch(url, {credentials: 'include' })  
+  return fetch(this.getPath(url), {credentials: 'include' })  
   .then(this.status)  
   .then(this.json)
   .then(function(data) {
@@ -29,7 +33,7 @@ Yak.Backend.prototype.fetch = function(url) {
 };
 
 Yak.Backend.prototype.postJSON = function(url, jsonData) {
-  return fetch(url, {  
+  return fetch(this.getPath(url), {  
     credentials: 'include',
     method: 'post',  
     headers: {  

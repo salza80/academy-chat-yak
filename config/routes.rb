@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  scope module: 'api' do
+  scope '/api', module: 'api' do
     resources  :messages, only: [:index, :new, :create]
   end
   root 'api/messages#index'
