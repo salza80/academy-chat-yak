@@ -10,6 +10,7 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //= require_self
+//= require pusher.min
 //= require turbolinks
 //= require react
 //= require_tree
@@ -17,4 +18,5 @@
 
 var Yak = {};
 Yak.Components = {};
+Yak.CONST = {};
 

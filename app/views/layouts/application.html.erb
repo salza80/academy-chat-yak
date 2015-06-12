@@ -3,11 +3,14 @@
 <head>
 <title>Yak</title>
 
-  <%= javascript_include_tag 'init_rollbar',  'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'pusher.min',  'data-turbolinks-track' => true %>
+
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <script type="text/javascript">
+    Yak.CONST.PUSHER_KEY = '<%=  ENV['PUSHER_KEY'] %>'
+  </script>
+  
 </head>
 <body>
 
