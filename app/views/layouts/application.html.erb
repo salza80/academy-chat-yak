@@ -9,6 +9,7 @@
   <%= csrf_meta_tags %>
   <script type="text/javascript">
     Yak.CONST.PUSHER_KEY = '<%=  ENV['PUSHER_KEY'] %>'
+    Yak.CONST.CSRF_TOKEN  = '<%= form_authenticity_token %>';
   </script>
   
 </head>

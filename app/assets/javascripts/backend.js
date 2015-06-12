@@ -39,6 +39,7 @@ Yak.Backend.prototype.postJSON = function(url, jsonData) {
     headers: {  
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      'X-CSRF-Token' : Yak.CONST.CSRF_TOKEN
     },  
     body: JSON.stringify(jsonData)
   })
