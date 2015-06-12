@@ -5,11 +5,6 @@ class Api::MessagesController < ApplicationController
   def index
     redirect_to login_path and return if current_user.nil?
     @messages = Message.all
-    @message = Message.new
-    respond_to do |format|
-      format.html
-      format.json
-    end
   end
 
   def create
