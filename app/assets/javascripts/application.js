@@ -13,8 +13,8 @@
 //= require pusher.min
 //= require fetch
 //= require turbolinks
+//= bootstrap-sprockets
 //= require react
-//= require bootstrap-sprockets
 //= require_tree
 //= require react_ujs
 
