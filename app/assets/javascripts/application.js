@@ -14,6 +14,7 @@
 //= require fetch
 //= require turbolinks
 //= require react
+//= require bootstrap-sprockets
 //= require_tree
 //= require react_ujs
 

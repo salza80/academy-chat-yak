@@ -1,0 +1,19 @@
+!!!
+%html
+  %head
+    %title Yak
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+    = javascript_tag do
+      Yak.CONST.PUSHER_KEY = '#{ENV['PUSHER_KEY']}'
+      Yak.CONST.CSRF_TOKEN  = '#{form_authenticity_token}';
+  %body
+    = render 'application/header'
+    .container-fluid.container
+      .row
+        .col-sm-2.rooms-col
+          %ul.nav.nav-stacked.rooms-list
+            %li.nav-header Rooms list
+        .col-sm-10.messages-col
+          = yield

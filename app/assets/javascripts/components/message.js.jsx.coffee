@@ -2,7 +2,7 @@ Yak.Components.Message = React.createClass
   render: ->
     `<div className="message">
       <div className="message-head">
-        {this.props.user}&nbsp;
+        <b>{this.props.user}&nbsp;</b>
         {this.props.created_at}
       </div>
       <div className="message-body">
