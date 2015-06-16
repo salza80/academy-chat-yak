@@ -1,20 +1,11 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any styles
- * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
- * file per style scope.
- *
- *= require_tree .
- *= require_self
- */
-@import "bootstrap-sprockets";
-@import "bootstrap";
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+
+$header-color: #ff942c;
+$link-color: #fff;
+$rooms-color: #24ae6a;
+$messages-color: #f5f5f5;
+
 
 html,body {
   height:100%;
@@ -23,15 +14,19 @@ html,body {
 
 .header {
   padding-right: 20px;
-  background-color: #FF942C;
-  margin-bottom: 0px;
-  a, span {
-    color: white;
+  background-color: $header-color;
+  margin-bottom: 0;
+
+  a,
+  span {
+    color: $link-color;
   }
+
   .navbar-left {
     padding-top: 7px;
     font-size: 25px;
   }
+
   .navbar-header {
     margin-left: 20px;
   }
@@ -48,7 +43,7 @@ html,body {
 }
 
 .rooms-col {
-  background-color: #24AE6A;
+  background-color: $rooms-color;
   height: 100%;
   overflow-y: scroll;
 }
@@ -58,7 +53,7 @@ html,body {
 }
 
 .messages-col {
-  background-color: whitesmoke;
+  background-color: $messages-color;
   height: 100%;
   padding-bottom: 120px;
 }
@@ -67,7 +62,7 @@ html,body {
 }
 
 .message-box {
-  padding: 10px 20px 10px 20px;
+  padding: 10px 20px;
   margin-bottom: 200px;
   overflow-y: scroll;
   height:100%;
@@ -81,11 +76,12 @@ html,body {
   bottom: 0;
   margin-bottom: 20px;
   width: 60%;
-  #body {
-    width: 100%;
-  }
 }
 
-ul.nav li a:hover {
+.message-body {
+  width: 100%;
+}
+
+.navbar-right li a:hover {
   background-color: transparent;
 }
