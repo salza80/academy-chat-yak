@@ -7,8 +7,9 @@ $rooms-color: #24ae6a;
 $messages-color: #f5f5f5;
 
 
-html,body {
-  height:100%;
+html,
+body {
+  height: 100%;
   overflow: hidden;
 }
 
@@ -57,18 +58,16 @@ html,body {
   height: 100%;
   padding-bottom: 120px;
 }
-.message-box-container{
-  height:100%;
+
+.message-box-container {
+  height: 100%;
 }
 
 .message-box {
   padding: 10px 20px;
   margin-bottom: 200px;
   overflow-y: scroll;
-  height:100%;
-}
-.message-list {
-
+  height: 100%;
 }
 
 .message-form {
