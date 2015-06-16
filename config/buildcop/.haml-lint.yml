@@ -11,3 +11,5 @@ linters:
   # Checks unnecessary double quotation marks
   UnnecessaryStringOutput:
     enabled: true
+    exclude:
+      - '**/application.html.haml'

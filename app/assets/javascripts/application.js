@@ -18,7 +18,7 @@
 //= require_tree
 //= require react_ujs
 
-var Yak = {};
+var Yak = Yak || {};
 Yak.Components = {};
 Yak.CONST = {};
 

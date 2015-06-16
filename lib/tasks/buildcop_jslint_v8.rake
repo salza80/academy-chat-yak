@@ -6,11 +6,13 @@ namespace :buildcop do
     target    = lint_files
     formatter = JSLintV8::Formatter.new(STDOUT)
     runner    = JSLintV8::Runner.new(target)
-
+    browser   = true
+    wsh       = true
     # Any further configuration can be done here (these are merged with the default options)
     # You can check the default configuration by running `jslint-v8 -h`
     lint_options = {
-      # asi: false
+      browser: true,
+      predef: ["fetch", "Promise", "Pusher"]
     }
     runner.jslint_options.merge!(lint_options)
 
@@ -29,7 +31,9 @@ def lint_files
   excluded_paths = [
     'vendor/**/*.js',
     'node_modules/**/*.js',
-    'tmp/**/*.js'
+    'tmp/**/*.js',
+    'public/**/*.js',
+    'app/assets/javascripts/init_rollbar.js'
   ]
   excluded_files = excluded_paths.map { |path| Dir.glob(path) }.inject(:+)
   (included_files - excluded_files).sort

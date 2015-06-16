@@ -1,15 +1,15 @@
-
+var Yak = Yak || {};
 
 Yak.Backend = function(){
-  this.path = '/api/'
+  this.path = '/api/';
+};
 
-}
 Yak.Backend.prototype.getPath = function(url){
-  return this.path.concat(url)
-}
+  return this.path.concat(url);
+};
 
 Yak.Backend.prototype.status = function(response) {  
-  if (response.status == 200) {  
+  if (response.status === 200) {  
     return Promise.resolve(response);
   } else {  
     return Promise.reject(new Error(response.statusText)); 
@@ -28,8 +28,7 @@ Yak.Backend.prototype.fetch = function(url) {
   .then(this.json)
   .then(function(data) {
     return Promise.resolve(data);   
-  })
-  .catch(this.error);
+  }).catch(this.error);
 };
 
 Yak.Backend.prototype.postJSON = function(url, jsonData) {
@@ -45,9 +44,8 @@ Yak.Backend.prototype.postJSON = function(url, jsonData) {
   })
   .then(this.json)  
   .then(function (data) {  
-    return Promise.resolve(data) 
-  })  
-  .catch(this.error);
+    return Promise.resolve(data);
+  }).catch(this.error);
 };
 
  

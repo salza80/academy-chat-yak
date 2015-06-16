@@ -5,7 +5,6 @@ namespace :buildcop do
   task :'haml-lint' do
     require 'haml_lint'
     require 'haml_lint/cli'
-
     logger = HamlLint::Logger.new(STDOUT)
     status = HamlLint::CLI.new(logger).run(%w(app/views -c config/buildcop/.haml-lint.yml))
     display_haml_lint_summary(status)

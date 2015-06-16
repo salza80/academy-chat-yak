@@ -1,6 +1,7 @@
 require 'rails_helper'
 require 'pusher'
-feature 'Sending message', type: :feature do
+
+feature 'Sending message' do
   before(:each) do
     Capybara.current_driver = :selenium
     OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(
