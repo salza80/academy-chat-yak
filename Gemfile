@@ -90,7 +90,7 @@ group :development do
   gem 'brakeman', '~> 3.0', require: false
   gem 'coffeelint', '~> 1.9', require: false
   gem 'scss-lint', '~> 0.36', require: false
-  gem 'haml-lint', '~> 0.12', require: false
+  gem 'haml_lint', '~> 0.14', require: false
   gem 'jslint-v8', '~> 1.1', require: false
   gem 'flay', '~> 2.6', require: false
   gem 'simplecov', '~> 0.9', require: false
