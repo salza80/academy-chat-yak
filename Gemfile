@@ -83,9 +83,8 @@ group :development, :test do
 
   gem 'capybara-screenshot'
 end
-
+gem 'rainbow', '~> 2.0', require: false
 group :development do
-  gem 'rainbow', '~> 2.0', require: false
   gem 'rubocop', '~> 0.30', git: 'https://github.com/bbatsov/rubocop', branch: 'master', require: false
   gem 'brakeman', '~> 3.0', require: false
   gem 'coffeelint', '~> 1.9', require: false
@@ -97,3 +96,5 @@ group :development do
   gem 'simplecov-console', '~> 0.2', require: false
   gem 'simplecov-json', '~> 0.2', require: false
 end
+
+ruby '2.2.2'
