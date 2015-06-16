@@ -46,7 +46,7 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
-  #set strategy and cleanup DB before running entire test suite
+  # set strategy and cleanup DB before running entire test suite
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.clean_with(:truncation)

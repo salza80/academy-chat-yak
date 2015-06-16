@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :message do |f|
-    f.body "Hi!"
+    f.body 'Hi!'
   end
 end

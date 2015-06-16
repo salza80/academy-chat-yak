@@ -11,12 +11,13 @@ class Api::MessagesController < ApplicationController
     Pusher['test_channel'].trigger(
       'my_event',
       render_to_string(
-        partial: 'api/messages/message.json', 
+        partial: 'api/messages/message.json',
         locals: { message: @message })
     )
   end
 
   private
+
   def message_params
     params.require(:message).permit(:body)
   end

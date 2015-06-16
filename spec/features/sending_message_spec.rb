@@ -1,30 +1,36 @@
-require "rails_helper"
+require 'rails_helper'
 require 'pusher'
-feature "Sending message", :type => :feature do
+feature 'Sending message', type: :feature do
   before(:each) do
     Capybara.current_driver = :selenium
-    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new({
-                  provider: 'github',
-                  uid: '87654321',
-                  info: {first_name: "Franek", "last_name": 'Kimono', nickname: "franek" },
-    })
+    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(
+      provider: 'github',
+      uid: '87654321',
+      info: { first_name: 'Franek', 'last_name': 'Kimono', nickname: 'franek' }
+    )
     OmniAuth.config.test_mode = true
-    visit "/"
-    click_button "Log in with Github"
+    visit '/'
+    click_button 'Log in with Github'
   end
 
-  scenario "User sends a message" do
-    fill_in "body", with: "Hello world!"
-    click_button "Send"
-    expect(page).to have_text("Hello world!")
+  scenario 'User sends a message' do
+    fill_in 'body', with: 'Hello world!'
+    click_button 'Send'
+    expect(page).to have_text('Hello world!')
   end
 
-  scenario "Server sends a message" do
+  scenario 'Server sends a message' do
     sleep 2
     Pusher.url = ENV['PUSHER_URL']
-    Pusher.trigger "test_channel", "my_event", '{"body":"hello you!","created_at":"2015-06-04T10:35:42.778Z","user": "franek"}'
+    Pusher.trigger(
+      'test_channel',
+      'my_event',
+      "{'body':'hello you!'," \
+      "'created_at':'2015-06-04T10:35:42.778Z'," \
+      "'user': 'franek'}"
+    )
     screenshot_and_save_page
-    expect(page).to have_content("hello you!")
+    expect(page).to have_content('hello you!')
     screenshot_and_save_page
   end
 
