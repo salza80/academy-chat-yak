@@ -40,7 +40,7 @@ for project validation application setup run <tt>`./bin/rake spec`</tt>
 * Please use {style guide}[https://pilot.hackpad.com/Code-style-guides-OeBefd9IEvZ]
 * We use buildcop for code analysis {buildcop}[https://github.com/pilotcreative/buildcop}]
 
-= To run code-analyzing tools:
+== To run buildcop code-analyzing tools:
 
   - all:
 
