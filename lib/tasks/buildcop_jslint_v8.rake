@@ -12,7 +12,8 @@ namespace :buildcop do
     # You can check the default configuration by running `jslint-v8 -h`
     lint_options = {
       browser: true,
-      predef: ["fetch", "Promise", "Pusher"]
+      predef: ["fetch", "Promise", "Pusher"],
+      es5: true
     }
     runner.jslint_options.merge!(lint_options)
 
