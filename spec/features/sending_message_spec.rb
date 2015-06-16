@@ -23,11 +23,12 @@ feature 'Sending message', type: :feature do
     sleep 2
     Pusher.url = ENV['PUSHER_URL']
     Pusher.trigger(
-      'test_channel',
-      'my_event',
-      "{'body':'hello you!'," \
-      "'created_at':'2015-06-04T10:35:42.778Z'," \
-      "'user': 'franek'}"
+      'test_channel', \
+      'my_event', \
+      '{"id": 12,' \
+      '"body":"hello you!",' \
+      '"created_at":"2015-06-04T10:35:42.778Z",' \
+      '"user": "franek"}'
     )
     screenshot_and_save_page
     expect(page).to have_content('hello you!')

@@ -9,13 +9,12 @@
         1,
         1,
         1,
-        null,
+        1,
         null
       ],
       "/home/sally/academy-chat-yak/app/models/user.rb": [
         1,
         1,
-        null,
         1,
         null
       ],
@@ -44,14 +43,12 @@
       ],
       "/home/sally/academy-chat-yak/app/controllers/sessions_controller.rb": [
         1,
-        null,
         1,
         null,
         null,
         1,
         2,
         2,
-        null,
         2,
         null,
         null,
@@ -81,12 +78,13 @@
         null,
         null,
         1,
+        null,
         1,
         1,
         null,
         null
       ]
     },
-    "timestamp": 1434453208
+    "timestamp": 1434459272
   }
 }
