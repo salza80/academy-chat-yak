@@ -9,7 +9,11 @@ Yak.Components.MessageBox = React.createClass({
     this.backend.fetch('messages.json').then(function(data){
       this.setState({data: data}); 
     }.bind(this))    
-  },   
+  }, 
+  componentDidUpdate: function() {
+  var node = this.getDOMNode();
+  node.scrollTop = node.scrollHeight;
+  },  
   componentDidMount: function() {
     this.backend = new Yak.Backend();
     this.fetchMessagesFromServer();
@@ -18,6 +22,7 @@ Yak.Components.MessageBox = React.createClass({
       var messages = this.state.data.messages;
       var newMessages = { messages : messages.concat(message) };
       this.setState({data: newMessages});
+
     }.bind(this));
   },
   render: function() {
