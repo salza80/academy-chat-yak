@@ -1,0 +1,31 @@
+# This is the main configuration file for RuboCop
+# More on configuring RuboCop: https://github.com/bbatsov/rubocop#configuration
+# Cops: http://www.rubydoc.info/github/bbatsov/rubocop/master/Rubocop/Cop/Cop, section 'Direct Known Subclasses' (or run rubocop --show-cops)
+# Default configuration file: https://github.com/bbatsov/rubocop/blob/master/config/default.yml
+
+AllCops:
+  Include:
+    - '**/Rakefile'
+    - '**/config.ru'
+  Exclude:
+    - '../../vendor/**/*'
+    - '../../db/**/*'
+    - '../../bin/**/*'
+    - '../../node_modules/**/*'
+    - '../../spec/spec_helper.rb'
+    - '../../spec/rails_helper.rb'
+    - '../../config/initializers/*'
+    - '../../config/environments/*'
+
+# Checks the length of lines in the source code
+Metrics/LineLength:
+  Max: 100 # default value: 80
+
+# Checks for missing top-level documentation of classes and modules
+Style/Documentation:
+  Enabled: false
+
+# Checks the style of children definitions at classes and modules
+# forces compact style for classes/modules with one child
+Style/ClassAndModuleChildren:
+  Enabled: false

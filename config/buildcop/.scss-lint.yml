@@ -1,0 +1,17 @@
+# This is the main configuration file for SCSS-Lint
+# More on configuring SCSS-Lint: https://github.com/causes/scss-lint#configuration
+# Available linters: https://github.com/causes/scss-lint/blob/master/lib/scss_lint/linter/README.md
+# Default configuration file: https://github.com/brigade/scss-lint/blob/master/config/default.yml
+
+linters:
+  # Checks if URLs are enclosed within quotes
+  UrlQuotes:
+    enabled: true
+
+  # Checks if there are no unnecessary double quotation marks
+  UnnecessaryStringOutput:
+    enabled: false
+
+  # Checks if properties are sorted in alphabetical order
+  PropertySortOrder:
+    enabled: false

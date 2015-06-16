@@ -38,4 +38,24 @@ for project validation application setup run <tt>`./bin/rake spec`</tt>
 
 == Code Conventions
 * Please use {style guide}[https://pilot.hackpad.com/Code-style-guides-OeBefd9IEvZ]
+* We use buildcop for code analysis {buildcop}[https://github.com/pilotcreative/buildcop}]
+
+= To run code-analyzing tools:
+
+  - all:
+
+    ```shell
+    $ bundle exec rake buildcop [FAIL_ON_ERROR=true]
+    ```
+
+  - selected:
+
+    ```shell
+    $ bundle exec rake buildcop:rubocop buildcop:coffeelint [FAIL_ON_ERROR=true]
+    ```
+_To check what rake tasks are available, run: `$ bundle exec rake -T buildcop`_
+
+**Note:**
+The optional *FAIL_ON_ERROR* parameter can be used to enforce task failure in case any problems with your code were found by any of the supported tools. The exit value produced in this case will be equal to 1. Please note, that a failure reported by any given tool will cause all subsequent checks to be omitted.
+
 

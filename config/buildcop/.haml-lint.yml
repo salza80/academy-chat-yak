@@ -1,0 +1,13 @@
+# This is the main configuration file for HAML-Lint
+# More on configuring HAML-Lint: https://github.com/brigade/haml-lint#configuration
+# Available linters: https://github.com/brigade/haml-lint/blob/master/lib/haml_lint/linter/README.md
+# Default configuration file: https://github.com/bbatsov/rubocop/blob/master/config/default.yml
+
+linters:
+  LineLength:
+    enabled: true
+    max: 100 # default value: 80
+
+  # Checks unnecessary double quotation marks
+  UnnecessaryStringOutput:
+    enabled: true

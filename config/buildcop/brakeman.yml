@@ -1,0 +1,6 @@
+# This is the main configuration file for Brakeman
+# Options: https://github.com/presidentbeef/brakeman/blob/master/lib/brakeman.rb#L17
+
+---
+:exit_on_warn: true
+:print_report: true

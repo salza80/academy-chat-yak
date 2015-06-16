@@ -14,7 +14,7 @@ feature "Sending message", :type => :feature do
   end
 
   scenario "User sends a message" do
-    fill_in "Body", with: "Hello world!"
+    fill_in "body", with: "Hello world!"
     click_button "Send"
     expect(page).to have_text("Hello world!")
   end
