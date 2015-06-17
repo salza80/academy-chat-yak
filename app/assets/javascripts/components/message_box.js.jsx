@@ -22,7 +22,6 @@ Yak.Components.MessageBox = React.createClass({
       var messages = this.state.data.messages;
       var newMessages = { messages : messages.concat(message) };
       this.setState({data: newMessages});
-
     }.bind(this));
   },
   render: function() {
