@@ -9,10 +9,5 @@
       Yak.CONST.PUSHER_KEY =  '#{ENV['PUSHER_KEY']}'
       Yak.CONST.CSRF_TOKEN  = '#{form_authenticity_token}'
   %body
-    = react_component 'Yak.Components.Header'
-    .container-fluid.container
-      .row
-        .col-sm-2.rooms-col
-          = react_component 'Yak.Components.RoomBox'
-        .col-sm-10.messages-col
-          = yield
+    = react_component 'Yak.Components.Header', user: current_user
+    = yield
