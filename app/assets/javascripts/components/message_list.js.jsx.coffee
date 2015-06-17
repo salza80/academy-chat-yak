@@ -1,7 +1,6 @@
 Yak.Components.MessageList = React.createClass(
   componentDidMount: ->
     setInterval (->
-      console.log("here")
       this.forceUpdate()
     ).bind(this), 10000
   render: ->
