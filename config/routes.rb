@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
   root 'home#index'
   scope '/api', module: 'api' do
-    resources :messages, only: [:index, :new, :create]
-    resources :chat_rooms, only: [:index]
+    resources :chat_rooms, only: [:index] do
+      resources :messages, only: [:index, :new, :create]
+    end
   end
   get '/home', to: 'home#index'
   get '/login', to: 'sessions#new', as: :login

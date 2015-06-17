@@ -6,6 +6,6 @@ Yak.Components.MessageForm = React.createClass
     React.findDOMNode(this.refs.body).value = ''
   render: ->
     `<form className="message-form" onSubmit={this.handleSubmit}>
-      <input class="message-body" type="text" placeholder="Enter message" ref="body" />
+      <input className="message-body" type="text" placeholder="Enter message" ref="body" />
       <input type="submit" value="Send" />
     </form>`

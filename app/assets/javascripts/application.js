@@ -12,6 +12,7 @@
 //= require_self
 //= require pusher.min
 //= require fetch
+//= require pubsub
 //= require turbolinks
 //= bootstrap-sprockets
 //= require moment
