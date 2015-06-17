@@ -1,6 +1,6 @@
 Yak.Components.MessageBox = React.createClass({
   getInitialState: function() {
-    return {data: {messages: []}, chat_room_id: 1};
+    return {data: {messages: []}};
   },
   handleMessageSubmit: function(message) {
     this.backend.postJSON('chat_rooms/' + this.state.chat_room_id + '/messages.json', message)

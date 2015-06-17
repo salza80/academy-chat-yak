@@ -15,6 +15,7 @@ feature 'Sending message' do
   end
 
   scenario 'User sends a message' do
+    visit '/'
     fill_in 'Enter message', with: 'Hello world!'
     click_button 'Send'
     expect(page).to have_text('Hello world!')
