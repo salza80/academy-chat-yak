@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'home#index'
   scope '/api', module: 'api' do
+    resources :chat_rooms, only: [:create]
     resources :chat_rooms, only: [:index] do
       resources :messages, only: [:index, :new, :create]
     end

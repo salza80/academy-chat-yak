@@ -53,6 +53,12 @@ body {
   margin-top: 10px;
 }
 
+.add-room-form {
+  bottom: 0;
+  position: fixed;
+  margin-bottom: 20px;
+}
+
 .messages-col {
   background-color: $messages-color;
   height: 100%;
@@ -122,5 +128,3 @@ time:hover::before {
   opacity: 1; 
   top: 22px;
 }
-
-
