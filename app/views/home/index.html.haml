@@ -1,1 +1,6 @@
-= react_component('Yak.Components.MessageBox', {}, class: 'message-box-container')
+.container-fluid.container
+  .row
+    .col-sm-2.rooms-col
+      = react_component 'Yak.Components.RoomBox'
+    .col-sm-10.messages-col
+      = react_component('Yak.Components.MessageBox', {}, class: 'message-box-container')
