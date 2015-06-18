@@ -3,4 +3,5 @@ Yak.Components.Room = React.createClass
     e.preventDefault()
     PubSub.publish('room_click', this.props.room.id);
   render: ->
-    `<li onClick={this.handleClick}>{this.props.room.name}</li>`
+    nameClass = 'room-' + this.props.room.channel_id
+    `<li className={nameClass} onClick={this.handleClick}>{this.props.room.name}</li>`
