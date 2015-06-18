@@ -6,7 +6,7 @@ feature 'Sending message' do
     @room1 = create(:chat_room) do |chat_room|
       create(:message, chat_room: chat_room)
     end
-    create(:chat_room, name: 'Berlin')
+    @room2 = create(:chat_room, name: 'Berlin')
   end
 
   before(:each) do
@@ -43,6 +43,21 @@ feature 'Sending message' do
     screenshot_and_save_page
     expect(page).to have_content('hello you!')
     screenshot_and_save_page
+  end
+
+  scenario 'Server sends a message to different channel' do
+    sleep 2
+
+    Pusher.url = ENV['PUSHER_URL']
+    Pusher.trigger(
+      'room_' + @room2.id.to_s, \
+      'new_message', \
+      '{"id": 13,' \
+      '"body":"Where am I?",' \
+      '"created_at":"2015-06-04T10:35:42.778Z",' \
+      '"user": "franek"}'
+    )
+    expect(page).to have_no_content('Where am I?!')
   end
 
   scenario 'User adds new room' do
