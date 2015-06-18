@@ -3,10 +3,12 @@ require 'pusher'
 
 feature 'Sending message' do
   before(:all) do
-    @room1 = create(:chat_room) do |chat_room|
-      create(:message, chat_room: chat_room)
+    @room1 = create(:chat_room, name: 'Roomie') do |chat_room|
+      create(:message, body: 'Hi!', chat_room: chat_room)
     end
-    @room2 = create(:chat_room, name: 'Berlin')
+    @room2 = create(:chat_room, name: 'Berlin') do |chat_room|
+      create(:message, body: 'Hello Berlin', chat_room: chat_room)
+    end
   end
 
   before(:each) do
@@ -19,7 +21,7 @@ feature 'Sending message' do
     OmniAuth.config.test_mode = true
     visit '/'
     click_button 'Log in with Github'
-    first('.chat-room-item').click
+    find('.chat-room-item', text: 'Roomie').click
   end
 
   scenario 'User sends a message' do
@@ -30,7 +32,6 @@ feature 'Sending message' do
 
   scenario 'Server sends a message' do
     sleep 2
-
     Pusher.url = ENV['PUSHER_URL']
     Pusher.trigger(
       'room_' + @room1.id.to_s, \
@@ -40,14 +41,13 @@ feature 'Sending message' do
       '"created_at":"2015-06-04T10:35:42.778Z",' \
       '"user": "franek"}'
     )
+    sleep 2
     screenshot_and_save_page
     expect(page).to have_content('hello you!')
     screenshot_and_save_page
   end
 
   scenario 'Server sends a message to different channel' do
-    sleep 2
-
     Pusher.url = ENV['PUSHER_URL']
     Pusher.trigger(
       'room_' + @room2.id.to_s, \
@@ -57,13 +57,27 @@ feature 'Sending message' do
       '"created_at":"2015-06-04T10:35:42.778Z",' \
       '"user": "franek"}'
     )
+    sleep 2
     expect(page).to have_no_content('Where am I?!')
+  end
+
+  scenario 'User switches chat rooms' do
+    expect(page).to have_text('Hi!')
+    find('.chat-room-item', text: 'Berlin').click
+    expect(page).to have_text('Hello Berlin')
+    expect(page).to have_no_text('Hi!')
   end
 
   scenario 'User adds new room' do
     fill_in 'Room name', with: 'New room'
     click_button 'Add'
+    sleep 2
     expect(page).to have_text('New room')
+  end
+
+  after(:all) do
+    @room1.destroy
+    @room2.destroy
   end
 
   after(:each) do
