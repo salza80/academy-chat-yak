@@ -8,20 +8,16 @@ Yak.Components.RoomBox = React.createClass
   componentDidMount: ->
     @backend = new (Yak.Backend)
     @fetchMessagesFromServer()
-  showForm: ->
-    @setState addRoom: true
   addRoom: (chat_room) ->
     @backend.postJSON 'chat_rooms.json', chat_room
     @fetchMessagesFromServer()
-    @setState addRoom: false
   render: ->
     `<div>
       <h3>Rooms</h3>
-      <ul className="nav nav-stacked rooms-list">
+      <ul className="nav nav-stacked">
         <Yak.Components.RoomList data={this.state.data} />
       </ul>
       <div className="add-room-form">
-        <button onClick={this.showForm}>Add Room</button>
-        { this.state.addRoom ? <Yak.Components.RoomForm onAddRoomClick={this.addRoom} /> : null }
+        <Yak.Components.RoomForm onAddRoomClick={this.addRoom} />
       </div>
     </div>`

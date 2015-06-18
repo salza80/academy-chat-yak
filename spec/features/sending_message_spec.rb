@@ -37,6 +37,12 @@ feature 'Sending message' do
     screenshot_and_save_page
   end
 
+  scenario 'User adds new room' do
+    fill_in 'Room name', with: 'New room'
+    click_button 'Add'
+    expect(page).to have_text('New room')
+  end
+
   after(:each) do
     OmniAuth.config.mock_auth[:github] = nil
     Capybara.reset!
