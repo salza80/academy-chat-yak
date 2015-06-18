@@ -14,9 +14,7 @@ Yak.Components.RoomBox = React.createClass
   render: ->
     `<div>
       <h3>Rooms</h3>
-      <ul className="nav nav-stacked">
-        <Yak.Components.RoomList data={this.state.data} />
-      </ul>
+      <Yak.Components.RoomList data={this.state.data} />
       <div className="add-room-form">
         <Yak.Components.RoomForm onAddRoomClick={this.addRoom} />
       </div>
