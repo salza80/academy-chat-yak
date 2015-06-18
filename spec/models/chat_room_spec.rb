@@ -3,7 +3,7 @@ describe ::ChatRoom do
   let(:chat_room) { FactoryGirl.create :chat_room }
 
   it 'has a valid factory' do
-    expect(chat_room.name).to eq('chatroom1')
+    expect(chat_room.name).to eq('Roomie')
   end
 
   it 'should require a name' do
