@@ -1,6 +1,6 @@
 require 'spec_helper'
 describe ::Message do
-  let(:message) { FactoryGirl.create :message }
+  let(:message) { create :message }
 
   it 'has a valid factory' do
     expect(message.body).to eq('Hi!')

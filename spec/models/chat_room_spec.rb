@@ -1,6 +1,6 @@
 require 'spec_helper'
 describe ::ChatRoom do
-  let(:chat_room) { FactoryGirl.create :chat_room }
+  let(:chat_room) { create :chat_room }
 
   it 'has a valid factory' do
     expect(chat_room.name).to eq('Roomie')

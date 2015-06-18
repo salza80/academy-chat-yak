@@ -3,7 +3,10 @@ require 'pusher'
 
 feature 'Sending message' do
   before(:all) do
-    @chat_room = FactoryGirl.create(:chat_room)
+    @room1 = create(:chat_room) do |chat_room|
+      create(:message, chat_room: chat_room)
+    end
+    create(:chat_room, name: 'Berlin')
   end
 
   before(:each) do
@@ -16,11 +19,10 @@ feature 'Sending message' do
     OmniAuth.config.test_mode = true
     visit '/'
     click_button 'Log in with Github'
+    first('.chat-room-item').click
   end
 
   scenario 'User sends a message' do
-    visit '/'
-    find('.room-1').click
     fill_in 'Enter message', with: 'Hello world!'
     click_button 'Send'
     expect(page).to have_text('Hello world!')
@@ -28,10 +30,11 @@ feature 'Sending message' do
 
   scenario 'Server sends a message' do
     sleep 2
+
     Pusher.url = ENV['PUSHER_URL']
     Pusher.trigger(
-      'test_channel', \
-      'my_event', \
+      'room_' + @room1.id.to_s, \
+      'new_message', \
       '{"id": 12,' \
       '"body":"hello you!",' \
       '"created_at":"2015-06-04T10:35:42.778Z",' \
@@ -51,10 +54,6 @@ feature 'Sending message' do
   after(:each) do
     OmniAuth.config.mock_auth[:github] = nil
     Capybara.reset!
-  end
-
-  after(:all) do
-    @chat_room.destroy
   end
 
   protected

@@ -10,8 +10,8 @@ class Api::MessagesController < ApplicationController
     @message.chat_room = @chat_room
     @message.save
     Pusher.url = ENV['PUSHER_URL']
-    Pusher['test_channel'].trigger(
-      'my_event',
+    Pusher['room_' + @chat_room.id.to_s].trigger(
+      'new_message',
       render_to_string(
         partial: 'api/messages/message.json',
         locals: { message: @message })
