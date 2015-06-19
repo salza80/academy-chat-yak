@@ -34,7 +34,7 @@ feature 'Sending message' do
     sleep 2
     Pusher.url = ENV['PUSHER_URL']
     Pusher.trigger(
-      'room_' + @room1.id.to_s, \
+      @room1.channel, \
       'new_message', \
       '{"id": 12,' \
       '"body":"hello you!",' \
@@ -50,7 +50,7 @@ feature 'Sending message' do
   scenario 'Server sends a message to different channel' do
     Pusher.url = ENV['PUSHER_URL']
     Pusher.trigger(
-      'room_' + @room2.id.to_s, \
+      @room2.channel, \
       'new_message', \
       '{"id": 13,' \
       '"body":"Where am I?",' \

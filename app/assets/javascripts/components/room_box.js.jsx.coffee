@@ -1,16 +1,16 @@
 Yak.Components.RoomBox = React.createClass
   getInitialState: ->
     { data: chat_rooms: [] }
-  fetchMessagesFromServer: ->
+  fetchRoomsFromServer: ->
     @backend.fetch('chat_rooms.json').then ((data) ->
       @setState data: data
     ).bind(this)
   componentDidMount: ->
     @backend = new (Yak.Backend)
-    @fetchMessagesFromServer()
+    @fetchRoomsFromServer()
   addRoom: (chat_room) ->
     @backend.postJSON 'chat_rooms.json', chat_room
-    @fetchMessagesFromServer()
+    @fetchRoomsFromServer()
   render: ->
     `<div>
       <h3>Rooms</h3>

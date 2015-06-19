@@ -4,7 +4,7 @@ class Api::ChatRoomsController < ApplicationController
   end
 
   def create
-    ChatRoom.create(channel_id: rand(1000), name: chat_room_params[:name])
+    ChatRoom.create(chat_room_params)
   end
 
   def chat_room_params
