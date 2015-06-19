@@ -33,11 +33,15 @@ Yak.Components.MessageBox = React.createClass({
     PubSub.unsubscribe(this.handleRoomClick);
   },
   render: function() {
+    var messageForm 
+    if (this.state['chat_room_id'] !== undefined) {
+      messageForm =  <Yak.Components.MessageForm onMessageSubmit={this.handleMessageSubmit} />
+    }
     return (
       <div className="message-box">
         <h1>Messages</h1>
         <Yak.Components.MessageList data={this.state.data} />
-        <Yak.Components.MessageForm onMessageSubmit={this.handleMessageSubmit} />
+        {messageForm}
       </div>
     );
   }

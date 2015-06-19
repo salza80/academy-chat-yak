@@ -16,4 +16,3 @@ Yak.Components.Header = React.createClass
           </div>
         </div>
       </div>`
-      
