@@ -55,6 +55,18 @@ body {
   list-style: none;
 }
 
+.room-list-item {
+  background-color: transparent;
+
+  &:hover {
+    background-color: lighten($rooms-color, 10%);
+  }
+
+  &.selected {
+    background-color: lighten($rooms-color, 30%);
+  }
+}
+
 .add-room-form {
   position: fixed;
   bottom: 0;

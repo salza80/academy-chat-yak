@@ -8,7 +8,6 @@ Yak.Components.MessageBox = React.createClass({
   handleRoomClick: function(message, room) {
     this.setState({chat_room_id: room.id});
     this.fetchMessagesFromServer()
-    console.log(room.channel)
     this.pusher.subscribe(room.channel, this.handleNewPusherMessage)
   },
   handleNewPusherMessage: function(message) {

@@ -21,7 +21,7 @@ feature 'Sending message' do
     OmniAuth.config.test_mode = true
     visit '/'
     click_button 'Log in with Github'
-    find('.chat-room-item', text: 'Roomie').click
+    find('.room-list-item', text: 'Roomie').click
   end
 
   scenario 'User sends a message' do
@@ -63,7 +63,7 @@ feature 'Sending message' do
 
   scenario 'User switches chat rooms' do
     expect(page).to have_text('Hi!')
-    find('.chat-room-item', text: 'Berlin').click
+    find('.room-list-item', text: 'Berlin').click
     expect(page).to have_text('Hello Berlin')
     expect(page).to have_no_text('Hi!')
   end
