@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
 
   def create
     r = request.env['omniauth.auth']
-    session[:id] = User.find_or_create_by(name: r['info']['nickname']).id
+    session[:id] = User.find_or_create_by(name: r['info']['nickname']).id if r
     redirect_to root_path
   end
 
