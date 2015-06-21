@@ -4,7 +4,8 @@ class Api::MessagesController < ApplicationController
   def index
     messages = params[:last_id].nil? ? @chat_room.messages : find_older
     @messages = messages.last(5)
-    @all_messages = @messages.empty? || @messages.first.id == Message.first.id ? true : false
+    first_message = @messages.first.id == @chat_room.messages.first.id
+    @all_messages = @messages.empty? || first_message ? true : false
   end
 
   def create
@@ -23,7 +24,7 @@ class Api::MessagesController < ApplicationController
   private
 
   def find_older
-    @chat_room.messages.select { message.id < params[:last_id].to_i }
+    @chat_room.messages.select { |message| message.id < params[:last_id].to_i }
   end
 
   def message_params
