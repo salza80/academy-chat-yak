@@ -46,7 +46,6 @@ Yak.Components.MessageBox = React.createClass({
     if (this.state['chat_room_id'] !== undefined) {
       messageForm =  <Yak.Components.MessageForm onMessageSubmit={this.handleMessageSubmit} />
       if (!this.state.all_messages_loaded) {
-        debugger;
         olderMessagesLink = <a onClick={this.fetchPartFromServer}>Get older messages</a>
      }
     }

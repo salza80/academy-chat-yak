@@ -2,16 +2,9 @@ class Api::MessagesController < ApplicationController
   before_action :logged_in, :set_chat_room
 
   def index
-    if (params[:last_id].nil?)
-      @messages = @chat_room.messages.last(5)
-    else
-      @messages = @chat_room.messages.select { |m| m.id < params[:last_id].to_i }.last(5)
-    end
-    if @messages.empty?
-      @all_messages = true
-    else
-      @all_messages = @messages.first.id == Message.first.id ? true : false
-    end
+    messages = params[:last_id].nil? ? @chat_room.messages : find_older
+    @messages = messages.last(5)
+    @all_messages = @messages.empty? || @messages.first.id == Message.first.id ? true : false
   end
 
   def create
@@ -28,6 +21,10 @@ class Api::MessagesController < ApplicationController
   end
 
   private
+
+  def find_older
+    @chat_room.messages.select { message.id < params[:last_id].to_i }
+  end
 
   def message_params
     params.require(:message).permit(:body)
