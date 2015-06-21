@@ -2,7 +2,16 @@ class Api::MessagesController < ApplicationController
   before_action :logged_in, :set_chat_room
 
   def index
-    @messages = @chat_room.messages.all
+    if (params[:last_id].nil?)
+      @messages = @chat_room.messages.last(5)
+    else
+      @messages = @chat_room.messages.select { |m| m.id < params[:last_id].to_i }.last(5)
+    end
+    if @messages.empty?
+      @all_messages = true
+    else
+      @all_messages = @messages.first.id == Message.first.id ? true : false
+    end
   end
 
   def create
