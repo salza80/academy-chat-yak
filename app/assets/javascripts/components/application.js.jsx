@@ -12,12 +12,14 @@ Yak.Components.Application = React.createClass({
       }.bind(this))
   },
   handleAddRoom: function(chat_room) {
-    this.backend.postJSON('chat_rooms.json', chat_room).then(function(new_chat_room) {
-      var chat_rooms = this.state.chat_rooms;
-      var newrooms = chat_rooms.concat(new_chat_room)
-      this.setState({chat_rooms: newrooms});
+    this.setState({selected_room: {"id": -1, "name": "", "channel":""}});
+    this.backend.postJSON('chat_rooms.json', chat_room)
+  },
+  handlePusherNewRoom: function(new_chat_room){
+    this.setState({chat_rooms: this.state.chat_rooms.concat(new_chat_room)});
+    if (this.state.selected_room.id == -1){
       this.fetchMessagesFromServer(new_chat_room);
-    }.bind(this))
+    }
   },
   handleRoomClick: function(room) {
     this.fetchMessagesFromServer(room)
@@ -25,18 +27,16 @@ Yak.Components.Application = React.createClass({
   fetchMessagesFromServer: function(room) {
     this.backend.fetch('chat_rooms/' + room.id  + '/messages.json').then(function(data){
       if(this.state.selected_room.id !== room.id){
-        this.pusher.subscribe(room.channel, this.handleNewPusherMessage);
+        this.pusherMessages.subscribe(room.channel);
       }
-      this.setState({messages: data.messages, selected_room: room}); 
-      this.setState({all_messages_loaded: data.all_messages});
+      this.setState({messages: data.messages, selected_room: room, all_messages_loaded: data.all_messages}); 
     }.bind(this))
   },
   fetchPartFromServer: function() {
     var size = this.state.messages.length;
     var last_id = size > 0 ? this.state.messages[0].id : -1;
     this.backend.fetch('chat_rooms/' + this.state.selected_room.id + '/messages.json?last_id=' + last_id).then(function (data) {
-      this.setState({messages: data.messages.concat(this.state.messages)});
-      this.setState({all_messages_loaded: data.all_messages});
+      this.setState({messages: data.messages.concat(this.state.messages), all_messages_loaded: data.all_messages});
     }.bind(this))
   },
   handleMessageSubmit: function(message) {
@@ -44,11 +44,14 @@ Yak.Components.Application = React.createClass({
   },
   componentDidMount: function() {
     this.backend = new Yak.Backend();
-    this.pusher =  new Yak.pusherInit();  
+    this.pusherMessages =  new Yak.pusherInit([{eventName: "new_message", callback:  this.handleNewPusherMessage }]);
+    this.pusherRooms = new Yak.pusherInit([{eventName: "new_room", callback:  this.handlePusherNewRoom}])
+    this.pusherRooms.subscribe("chat_rooms")
     this.fetchRoomsFromServer();
   },  
   componentWillUnmount: function() {
-    this.pusher.unsubscribe();
+    this.pusherMessages.unsubscribe();
+    this.pusherRooms.unsubscribe();
   },
   handleNewPusherMessage: function(message) {
     var messages = this.state.messages;
@@ -60,7 +63,7 @@ Yak.Components.Application = React.createClass({
       <div className = 'container-fluid container'>
         <div className ='row'>
           <div className='col-sm-2 rooms-col'>
-            <Yak.Components.RoomBox selected_room_id={this.state.selected_room.id} chat_rooms={this.state.chat_rooms} onRoomClick = {this.handleRoomClick} onAddRoomClick = {this.handleAddRoom} />
+            <Yak.Components.RoomBox selected_room={this.state.selected_room} chat_rooms={this.state.chat_rooms} onRoomClick = {this.handleRoomClick} onAddRoomClick = {this.handleAddRoom} />
           </div>
           <div className='col-sm-10 messages-col'>
              <Yak.Components.MessageBox selected_room = {this.state.selected_room}

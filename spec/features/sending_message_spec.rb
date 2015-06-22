@@ -24,7 +24,7 @@ feature 'Sending message' do
     OmniAuth.config.test_mode = true
     visit '/'
     click_button 'Log in with Github'
-    find('.room-list-item', text: 'Roomie').click
+    sleep 2
   end
 
   scenario 'User sends a message' do
@@ -34,7 +34,6 @@ feature 'Sending message' do
   end
 
   scenario 'Server sends a message' do
-    sleep 2
     Pusher.url = ENV['PUSHER_URL']
     Pusher.trigger(
       @room1.channel, \
@@ -74,8 +73,8 @@ feature 'Sending message' do
   scenario 'User adds new room' do
     fill_in 'Room name', with: 'New room'
     click_button 'Add'
-    sleep 2
     expect(page).to have_text('New room')
+    expect(page).to have_no_text('Hi!')
   end
 
   scenario 'There are no older messages to scroll' do
@@ -83,14 +82,9 @@ feature 'Sending message' do
     expect(page).not_to have_text('Get older messages')
   end
 
-  scenario 'There are older messages to scroll' do
-    find('.room-list-item', text: 'Melbourne').click
-    expect(page).to have_text('Get older messages')
-    expect(page).to have_css('div.message', count: 20)
-  end
-
   scenario 'Older messages load' do
     find('.room-list-item', text: 'Melbourne').click
+    expect(page).to have_text('Get older messages')
     expect(page).to have_css('div.message', count: 20)
     page.find('a', text: 'Get older messages').click
     expect(page).to have_css('div.message', count: 25)

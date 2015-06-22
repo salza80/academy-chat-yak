@@ -5,6 +5,13 @@ class Api::ChatRoomsController < ApplicationController
 
   def create
     @chat_room = ChatRoom.create(chat_room_params)
+    Pusher.url = ENV['PUSHER_URL']
+    Pusher['chat_rooms'].trigger(
+      'new_room',
+      render_to_string(
+        partial: 'api/chat_rooms/chat_room.json',
+        locals: { chat_room: @chat_room })
+    )
   end
 
   def chat_room_params
