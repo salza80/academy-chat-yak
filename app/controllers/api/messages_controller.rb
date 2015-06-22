@@ -26,7 +26,7 @@ class Api::MessagesController < ApplicationController
   end
 
   def all_messages?
-    first_message = @messages.first.id == @chat_room.messages.first.id
+    first_message = @messages.first == @chat_room.messages.first
     @all_messages = @messages.empty? || first_message ? true : false
   end
 
