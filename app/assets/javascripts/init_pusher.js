@@ -6,9 +6,12 @@ Yak.pusherInit = function() {
   this.channel = undefined;
 };
 Yak.pusherInit.prototype.subscribe = function(newChannelName, callback) {
-  if (this.channelName !== undefined){ this.pusher.unsubscribe(this.channelName); }
+  this.unsubscribe();
   this.channelName = newChannelName;
   this.channel = this.pusher.subscribe(newChannelName);
   this.channel.bind('new_message', callback);
+};
+Yak.pusherInit.prototype.unsubscribe = function() {
+  if (this.channelName !== undefined){ this.pusher.unsubscribe(this.channelName); }
 };
 

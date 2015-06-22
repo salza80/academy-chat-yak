@@ -4,7 +4,7 @@ class Api::ChatRoomsController < ApplicationController
   end
 
   def create
-    ChatRoom.create(chat_room_params)
+    @chat_room = ChatRoom.create(chat_room_params)
   end
 
   def chat_room_params

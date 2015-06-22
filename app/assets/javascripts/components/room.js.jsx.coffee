@@ -1,8 +1,8 @@
 Yak.Components.Room = React.createClass
   handleClick: (e) ->
     e.preventDefault()
-    PubSub.publish('room_click', { id : this.props.room.id, channel:  this.props.room.channel })
-    this.props.onRoomClick(this.props.room.id)
+    # PubSub.publish('room_click', { id : this.props.room.id, channel:  this.props.room.channel })
+    this.props.onRoomClick(this.props.room)
   render: ->
     className = "room-list-item"
     if (@props.selected)
