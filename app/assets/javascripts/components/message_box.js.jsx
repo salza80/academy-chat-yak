@@ -51,7 +51,7 @@ Yak.Components.MessageBox = React.createClass({
     }
     return (
       <div className="message-box">
-        <h1 id="the-title">Messages</h1>
+        <h1>Messages</h1>
         {olderMessagesLink}
         <Yak.Components.MessageList data={this.state.data} />
         {messageForm}

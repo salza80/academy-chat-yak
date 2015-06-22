@@ -9,6 +9,9 @@ feature 'Sending message' do
     @room2 = create(:chat_room, name: 'Berlin') do |chat_room|
       create(:message, body: 'Hello Berlin', chat_room: chat_room)
     end
+    @room3 = create(:chat_room, name: 'Melbourne') do |chat_room|
+      chat_room.messages = build_list(:message, 25)
+    end
   end
 
   before(:each) do
@@ -75,9 +78,28 @@ feature 'Sending message' do
     expect(page).to have_text('New room')
   end
 
+  scenario 'There are no older messages to scroll' do
+    find('.room-list-item', text: 'Berlin').click
+    expect(page).not_to have_text('Get older messages')
+  end
+
+  scenario 'There are older messages to scroll' do
+    find('.room-list-item', text: 'Melbourne').click
+    expect(page).to have_text('Get older messages')
+    expect(page).to have_css('div.message', count: 20)
+  end
+
+  scenario 'Older messages load' do
+    find('.room-list-item', text: 'Melbourne').click
+    expect(page).to have_css('div.message', count: 20)
+    page.find('a', text: 'Get older messages').click
+    expect(page).to have_css('div.message', count: 25)
+  end
+
   after(:all) do
     @room1.destroy
     @room2.destroy
+    @room3.destroy
   end
 
   after(:each) do
