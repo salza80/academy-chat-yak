@@ -23,7 +23,7 @@ Yak.Backend.prototype.json = function(response) {
 Yak.Backend.prototype.error = function(response) {};
 
 Yak.Backend.prototype.fetch = function(url) {
-  return fetch(this.getPath(url), {credentials: 'include' })
+  return fetch(this.getPath(url), {credentials: 'include'})
   .then(this.status)
   .then(this.json)
   .then(function(data) {
