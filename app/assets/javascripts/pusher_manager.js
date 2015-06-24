@@ -1,7 +1,15 @@
 var Yak = Yak || {};
 
-Yak.pusherInit = function(events) {
+Yak.PusherManager = function() {
   this.pusher = new Pusher(Yak.CONST.PUSHER_KEY);
+  this.channelGroup = {};
+};
+Yak.PusherManager.prototype.addChannelGroup = function (groupName, events){
+  this.channelGroup[groupName] = new Yak.ChannelGroupManager(this.pusher, events);
+};
+
+Yak.ChannelGroupManager = function(pusher, events){
+  this.pusher = pusher
   this.channelName = undefined;
   this.channel = undefined;
   this.events = events || [];
@@ -15,16 +23,16 @@ Yak.pusherInit = function(events) {
     this.channel.bind(event.eventName, event.callback);
   };
 };
-Yak.pusherInit.prototype.subscribe = function(newChannelName) {
+Yak.ChannelGroupManager.prototype.subscribe = function(newChannelName) {
   this.unsubscribe();
   this.channelName = newChannelName;
   this.channel = this.pusher.subscribe(newChannelName);
   this.bindEvents();
 };
-Yak.pusherInit.prototype.unsubscribe = function() {
+Yak.ChannelGroupManager.prototype.unsubscribe = function() {
   if (this.channelName !== undefined){ this.pusher.unsubscribe(this.channelName); }
 };
-Yak.pusherInit.prototype.addEvent = function(eventName, callback) {
+Yak.ChannelGroupManager.prototype.addEvent = function(eventName, callback) {
   var newEvent = {"eventName": eventName, "callback": callback};
   this.events.push(newEvent);
   if (this.channel !== undefined){ this.bindEvent(newEvent); }
