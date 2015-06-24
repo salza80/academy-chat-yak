@@ -61,6 +61,12 @@ body {
 
 .room-list-item {
   background-color: transparent;
+  padding: 1px;
+
+  li {
+    display: inline-block;
+    width: 89%;
+  }
 
   &:hover {
     background-color: lighten($rooms-color, 10%);
@@ -68,6 +74,11 @@ body {
 
   &.selected {
     background-color: lighten($rooms-color, 30%);
+  }
+
+  .glyphicon-remove {
+    cursor: pointer;
+    padding-left: 5px;
   }
 }
 

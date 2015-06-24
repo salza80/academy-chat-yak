@@ -6,7 +6,6 @@ Yak.Components.MessageBox = React.createClass({
   render: function() {
     var messageForm, olderMessagesLink;
     if (this.props.selected_room !== null) {
-      debugger;
       messageForm =  <Yak.Components.MessageForm onMessageSubmit={this.props.onMessageSubmit} />
       if (!this.props.all_messages_loaded) {
         olderMessagesLink = <a onClick={this.props.fetchPartFromServer}>Get older messages</a>

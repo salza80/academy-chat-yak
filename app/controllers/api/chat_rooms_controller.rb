@@ -14,6 +14,11 @@ class Api::ChatRoomsController < ApplicationController
     )
   end
 
+  def destroy
+    chat_room = ChatRoom.find(params[:id])
+    chat_room.destroy if chat_room.messages.empty?
+  end
+
   def chat_room_params
     params.require(:chat_room).permit(:name)
   end
