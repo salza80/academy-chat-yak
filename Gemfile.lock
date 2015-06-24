@@ -256,6 +256,8 @@ GEM
     rainbow (2.0.0)
     rake (10.4.2)
     rdoc (4.2.0)
+    react-bootstrap-rails (0.13.0)
+      rails (>= 3.1)
     react-rails (1.0.0)
       coffee-script-source (~> 1.8)
       connection_pool
@@ -389,6 +391,7 @@ DEPENDENCIES
   rails (= 4.2.1)
   rails_12factor
   rainbow (~> 2.0)
+  react-bootstrap-rails (~> 0.13.0)
   react-rails (~> 1.0)
   rollbar (~> 1.5.1)
   rspec-rails (~> 3.0)
