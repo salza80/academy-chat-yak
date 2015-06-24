@@ -9,7 +9,7 @@ Yak.PusherManager.prototype.addChannelGroup = function (groupName, events){
 };
 
 Yak.ChannelGroupManager = function(pusher, events){
-  this.pusher = pusher
+  this.pusher = pusher;
   this.channelName = undefined;
   this.channel = undefined;
   this.events = events || [];
