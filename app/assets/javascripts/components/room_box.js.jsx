@@ -1,5 +1,7 @@
-
+var Navigation = ReactRouter.Navigation;
+var State = ReactRouter.State;
 Yak.Components.RoomBox = React.createClass({
+  mixins: [Navigation, State ],
   getInitialState: function() {
     return {chat_rooms: []};
     
@@ -17,6 +19,9 @@ Yak.Components.RoomBox = React.createClass({
   fetchRoomsFromServer: function() {
     Yak.backend.fetch('chat_rooms.json').then(function(data) {
       this.setState({chat_rooms: data.chat_rooms});
+      if (this.getParams().room_id === undefined && data.chat_rooms.length > 0){
+        this.transitionTo('Room', {room_id: data.chat_rooms[0].id});
+      }
     }.bind(this))
   },
   handleAddRoom: function(chat_room) {

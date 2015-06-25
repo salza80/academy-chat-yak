@@ -15,6 +15,5 @@ Yak.Components.MyRoutes = (
     <Route name="Room" path="/room/:room_id" handler={Yak.Components.MessageBox} />
     <NotFoundRoute handler={Yak.Components.NoRoomFound} />
   </Route>
-
 );
 
