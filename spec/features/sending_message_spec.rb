@@ -7,7 +7,8 @@ feature 'Sending message' do
   end
 
   before(:each) do
-    setup_login
+    setup_environment
+    login
   end
 
   scenario 'User sends a message' do
@@ -19,6 +20,7 @@ feature 'Sending message' do
 
   scenario 'Server sends a message' do
     find('.room-list-item a', text: 'Roomie').click
+    sleep 2
     Pusher.url = ENV['PUSHER_URL']
     Pusher.trigger(
       @room1.channel, \

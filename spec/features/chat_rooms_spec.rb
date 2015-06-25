@@ -7,7 +7,8 @@ feature 'Rooms management' do
   end
 
   before(:each) do
-    setup_login
+    setup_environment
+    login
   end
 
   scenario 'User switches chat rooms' do
