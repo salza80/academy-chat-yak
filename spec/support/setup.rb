@@ -22,6 +22,7 @@ module FeatureTestsSetup
     OmniAuth.config.test_mode = true
     visit '/'
     click_button 'Log in with Github'
+    wait_for_pusher
   end
 end
 

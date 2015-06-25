@@ -13,6 +13,7 @@ feature 'Sending message' do
   scenario 'User sends a message' do
     fill_in 'Enter message', with: 'Hello world!'
     click_button 'Send'
+    wait_for_pusher
     expect(page).to have_text('Hello world!')
   end
 
