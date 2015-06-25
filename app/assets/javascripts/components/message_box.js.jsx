@@ -5,10 +5,10 @@ Yak.Components.MessageBox = React.createClass({
   },
   componentDidMount: function() {
     this.backend = new Yak.Backend();
-    var pusher = new Yak.PusherManager();
-    pusher.addChannelGroup('Messages',[{eventName: "new_message", callback:  this.handleNewPusherMessage }] )
-    this.MessagesPusher = pusher.channelGroup["Messages"]
+    Yak.PusherManager.addChannelGroup('Messages',[{eventName: "new_message", callback:  this.handleNewPusherMessage }] )
+    this.MessagesPusher = Yak.PusherManager.channelGroup["Messages"]
     this.fetchMessagesFromServer(this.props.params.room_id);
+    console.log(this.MessagesPusher)
   },
   componentWillUnmount: function() {
     this.MessagesPusher.unsubscribe();

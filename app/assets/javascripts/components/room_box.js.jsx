@@ -6,9 +6,8 @@ Yak.Components.RoomBox = React.createClass({
   },
   componentDidMount: function() {
     this.backend = new Yak.Backend();
-    var pusher = new Yak.PusherManager();
-    pusher.addChannelGroup('Rooms', [{eventName: "new_room", callback:  this.handlePusherNewRoom}])
-    this.RoomsPusher = pusher.channelGroup["Rooms"]
+    Yak.PusherManager.addChannelGroup('Rooms', [{eventName: "new_room", callback:  this.handlePusherNewRoom}])
+    this.RoomsPusher = Yak.PusherManager.channelGroup["Rooms"]
     this.RoomsPusher.subscribe('chat_rooms')
     this.fetchRoomsFromServer();
   },  

@@ -2,7 +2,7 @@ var RouteHandler = ReactRouter.RouteHandler;
 
 Yak.Components.Application = React.createClass({
   getInitialState: function() {
-    return {messages: [], chat_rooms: [], selected_room: {"id": 0, "name": "", "channel":""}, all_messages_loaded: true};
+    return {};
     
   },
   componentDidMount: function() {

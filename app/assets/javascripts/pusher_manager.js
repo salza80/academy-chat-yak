@@ -1,12 +1,16 @@
 var Yak = Yak || {};
 
-Yak.PusherManager = function() {
-  this.pusher = new Pusher(Yak.CONST.PUSHER_KEY);
-  this.channelGroup = {};
+Yak.PusherManager = {
+  pusher: undefined,
+  channelGroup: {}
 };
-Yak.PusherManager.prototype.addChannelGroup = function (groupName, events){
-  this.channelGroup[groupName] = new Yak.ChannelGroupManager(this.pusher, events);
-};
+
+Yak.PusherManager.addChannelGroup = function (groupName, events){
+    if (this.pusher === undefined){
+      this.pusher = new Pusher(Yak.CONST.PUSHER_KEY);
+    }
+    this.channelGroup[groupName] = new Yak.ChannelGroupManager(this.pusher, events);
+  };
 
 Yak.ChannelGroupManager = function(pusher, events){
   this.pusher = pusher;
