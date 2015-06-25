@@ -10,9 +10,10 @@ var NotFoundRoute = Router.NotFoundRoute;
 
 Yak.Components.MyRoutes = (
   <Route name="Application" path="/" handler={Yak.Components.Application}>
-    <DefaultRoute handler={Yak.Components.MessageBox} />
+    <DefaultRoute handler={Yak.Components.NoRoomFound} />
+    <Route name="NoRoom" path="/room/" handler={Yak.Components.NoRoomFound} />
     <Route name="Room" path="/room/:room_id" handler={Yak.Components.MessageBox} />
-    <NotFoundRoute handler={Yak.Components.MessageBox} />
+    <NotFoundRoute handler={Yak.Components.NoRoomFound} />
   </Route>
 
 );
