@@ -51,11 +51,14 @@ gem 'pusher'
 #use moment.js javascript library
 gem 'momentjs-rails'
 
+#use react router javascript library
+gem 'react-router-rails', '~>0.13.3'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
-# gem 'unicorn'
+# gem 'unicorn'gem 'react-router-rails', '~>0.13.3'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

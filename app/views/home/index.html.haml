@@ -1,1 +1,4 @@
-= react_component('Yak.Components.Application', {}, class: 'application-container')
+= react_router 'Yak.Components.MyRoutes', 'HashLocation',
+  { user: current_user },
+  class: 'application-container'
+

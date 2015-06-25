@@ -1,7 +1,7 @@
 Yak.Components.Header = React.createClass
   render: ->
-    if (@props.user)
-      logout = `<a href="logout">Log out</a>`
+    # if (@props.user)
+    logout = `<a href="logout">Log out</a>`
     `<div className="navbar navbar-static-top header">
         <div className="container-fluid">
           <div className="navbar-header navbar-left">

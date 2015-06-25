@@ -4,6 +4,7 @@
 $header-color: #ff942c;
 $link-color: #fff;
 $rooms-color: #24ae6a;
+$rooms-text-color:#000;
 $messages-color: #f5f5f5;
 $tooltip-color: #000;
 
@@ -37,10 +38,13 @@ body {
   height: 100%;
 }
 
+.page-container {
+  height: 100%;
+}
+
 .container {
   width: 100%;
   height: 100%;
-
 }
 
 .row {
@@ -50,7 +54,15 @@ body {
 .rooms-col {
   background-color: $rooms-color;
   height: 100%;
+  padding-bottom: 120px;
+  padding-right: 2px;
+}
+
+.rooms-box {
+  padding: 10px 20px;
+  margin-bottom: 200px;
   overflow-y: scroll;
+  height: 100%;
 }
 
 .rooms-list {
@@ -62,12 +74,16 @@ body {
 .room-list-item {
   background-color: transparent;
 
-  &:hover {
-    background-color: lighten($rooms-color, 10%);
-  }
+  a {
+    color: $rooms-text-color;
 
-  &.selected {
-    background-color: lighten($rooms-color, 30%);
+    &:hover {
+      background-color: lighten($rooms-color, 10%);
+    }
+
+    &.active {
+      background-color: lighten($rooms-color, 30%);
+    }
   }
 }
 
@@ -85,6 +101,7 @@ body {
   background-color: $messages-color;
   height: 100%;
   padding-bottom: 120px;
+  padding-right: 2px;
 }
 
 .message-box-container {

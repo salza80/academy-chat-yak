@@ -12,15 +12,19 @@
 //= require_self
 //= require pusher.min
 //= require fetch
-//= require pubsub
 //= require turbolinks
 //= bootstrap-sprockets
 //= require moment
 //= require react
+//= require react_router
 //= require_tree
-//= require react_ujs
+
+//= require react_router_ujs
+
 
 var Yak = Yak || {};
 Yak.Components = {};
 Yak.CONST = {};
+
+
 
