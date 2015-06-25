@@ -3,7 +3,7 @@ Yak.Components.MessageBox = React.createClass({
     return {messages: [], selected_room: {"id": 0, "name": "", "channel":""}, all_messages_loaded: true};
   },
   componentDidMount: function() {
-    this.backend = new Yak.Backend();
+    // this.backend = new Yak.Backend();
     Yak.PusherManager.addChannelGroup('Messages',[{eventName: "new_message", callback:  this.handleNewPusherMessage }] )
     this.MessagesPusher = Yak.PusherManager.channelGroup["Messages"]
     this.fetchMessagesFromServer(this.props.params.room_id);
@@ -20,7 +20,7 @@ Yak.Components.MessageBox = React.createClass({
 
   },
   fetchMessagesFromServer: function(room_id) {
-    this.backend.fetch('chat_rooms/' + room_id  + '/messages.json').then(function(data){
+    Yak.backend.fetch('chat_rooms/' + room_id  + '/messages.json').then(function(data){
     this.MessagesPusher.subscribe('room_' + room_id);
     this.setState({messages: data.messages, all_messages_loaded: data.all_messages}); 
     }.bind(this))
@@ -28,12 +28,12 @@ Yak.Components.MessageBox = React.createClass({
   fetchPartFromServer: function() {
     var size = this.state.messages.length;
     var last_id = size > 0 ? this.state.messages[0].id : -1;
-    this.backend.fetch('chat_rooms/' + this.props.params.room_id + '/messages.json?last_id=' + last_id).then(function (data) {
+    Yak.backend.fetch('chat_rooms/' + this.props.params.room_id + '/messages.json?last_id=' + last_id).then(function (data) {
       this.setState({messages: data.messages.concat(this.state.messages), all_messages_loaded: data.all_messages});
     }.bind(this))
   },
   handleMessageSubmit: function(message) {
-    this.backend.postJSON('chat_rooms/' + this.props.params.room_id + '/messages.json', message)
+    Yak.backend.postJSON('chat_rooms/' + this.props.params.room_id + '/messages.json', message)
   },
   handleNewPusherMessage: function(message) {
     var messages = this.state.messages;

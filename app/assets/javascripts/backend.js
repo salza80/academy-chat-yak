@@ -1,14 +1,14 @@
 var Yak = Yak || {};
 
-Yak.Backend = function(){
-  this.path = '/api/';
+Yak.backend = {
+  path: '/api/'
 };
 
-Yak.Backend.prototype.getPath = function(url){
+Yak.backend.getPath = function(url){
   return this.path.concat(url);
 };
 
-Yak.Backend.prototype.status = function(response) {
+Yak.backend.status = function(response) {
   if (response.status === 200) {
     return Promise.resolve(response);
   } else {
@@ -16,13 +16,13 @@ Yak.Backend.prototype.status = function(response) {
   }
 };
 
-Yak.Backend.prototype.json = function(response) {
+Yak.backend.json = function(response) {
   return response.json();
 };
 
-Yak.Backend.prototype.error = function(response) {};
+Yak.backend.error = function(response) {};
 
-Yak.Backend.prototype.fetch = function(url) {
+Yak.backend.fetch = function(url) {
   return fetch(this.getPath(url), {credentials: 'include'})
   .then(this.status)
   .then(this.json)
@@ -31,7 +31,7 @@ Yak.Backend.prototype.fetch = function(url) {
   }).catch(this.error);
 };
 
-Yak.Backend.prototype.postJSON = function(url, jsonData) {
+Yak.backend.postJSON = function(url, jsonData) {
   return fetch(this.getPath(url), {
     credentials: 'include',
     method: 'post',
@@ -48,7 +48,7 @@ Yak.Backend.prototype.postJSON = function(url, jsonData) {
   }).catch(this.error);
 }; 
 
-Yak.Backend.prototype.delete = function(url) {
+Yak.backend.delete = function(url) {
   return fetch(this.getPath(url), {
     credentials: 'include',
     method: 'delete',

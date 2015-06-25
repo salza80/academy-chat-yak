@@ -5,7 +5,7 @@ Yak.Components.RoomBox = React.createClass({
     
   },
   componentDidMount: function() {
-    this.backend = new Yak.Backend();
+    // this.backend = new Yak.Backend();
     Yak.PusherManager.addChannelGroup('Rooms', [{eventName: "new_room", callback:  this.handlePusherNewRoom}])
     this.RoomsPusher = Yak.PusherManager.channelGroup["Rooms"]
     this.RoomsPusher.subscribe('chat_rooms')
@@ -15,13 +15,13 @@ Yak.Components.RoomBox = React.createClass({
     this.RoomsPusher.unsubscribe();
   },
   fetchRoomsFromServer: function() {
-    this.backend.fetch('chat_rooms.json').then(function(data) {
+    Yak.backend.fetch('chat_rooms.json').then(function(data) {
       this.setState({chat_rooms: data.chat_rooms});
     }.bind(this))
   },
   handleAddRoom: function(chat_room) {
     this.addedRoom = chat_room.chat_room.name
-    this.backend.postJSON('chat_rooms.json', chat_room)
+    Yak.backend.postJSON('chat_rooms.json', chat_room)
   },
   handlePusherNewRoom: function(new_chat_room){
     this.setState({chat_rooms: this.state.chat_rooms.concat(new_chat_room)});
