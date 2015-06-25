@@ -1,6 +1,5 @@
 require 'rails_helper'
 require 'pusher'
-require 'support/setup.rb'
 
 feature 'Sending message' do
   before(:all) do
@@ -19,7 +18,6 @@ feature 'Sending message' do
 
   scenario 'Server sends a message' do
     find('.room-list-item a', text: 'Roomie').click
-    sleep 2
     Pusher.url = ENV['PUSHER_URL']
     Pusher.trigger(
       @room1.channel, \
@@ -29,7 +27,7 @@ feature 'Sending message' do
       '"created_at":"2015-06-04T10:35:42.778Z",' \
       '"user": "franek"}'
     )
-    sleep 2
+    wait_for_pusher
     screenshot_and_save_page
     expect(page).to have_content('hello you!')
     screenshot_and_save_page
@@ -45,7 +43,7 @@ feature 'Sending message' do
       '"created_at":"2015-06-04T10:35:42.778Z",' \
       '"user": "franek"}'
     )
-    sleep 2
+    wait_for_pusher
     expect(page).to have_no_content('Where am I?!')
   end
 

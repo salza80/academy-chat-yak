@@ -13,6 +13,7 @@ module FeatureTestsSetup
 
   def setup_login
     Capybara.current_driver = :selenium
+    Capybara.default_wait_time = 5
     OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(
       provider: 'github',
       uid: '87654321',

@@ -1,6 +1,5 @@
 require 'rails_helper'
 require 'pusher'
-require 'support/setup.rb'
 
 feature 'Rooms management' do
   before(:all) do
