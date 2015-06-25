@@ -1,13 +1,12 @@
 var Navigation = ReactRouter.Navigation;
 var State = ReactRouter.State;
+
 Yak.Components.RoomBox = React.createClass({
   mixins: [Navigation, State ],
   getInitialState: function() {
     return {chat_rooms: []};
-    
   },
   componentDidMount: function() {
-    // this.backend = new Yak.Backend();
     Yak.PusherManager.addChannelGroup('Rooms', [{eventName: "new_room", callback:  this.handlePusherNewRoom}])
     this.RoomsPusher = Yak.PusherManager.channelGroup["Rooms"]
     this.RoomsPusher.subscribe('chat_rooms')
@@ -24,6 +23,10 @@ Yak.Components.RoomBox = React.createClass({
       }
     }.bind(this))
   },
+  scroll: function(){
+    var node = this.getDOMNode();
+    node.scrollTop = node.scrollHeight;
+  },
   handleAddRoom: function(chat_room) {
     this.addedRoom = chat_room.chat_room.name
     Yak.backend.postJSON('chat_rooms.json', chat_room)
@@ -31,8 +34,8 @@ Yak.Components.RoomBox = React.createClass({
   handlePusherNewRoom: function(new_chat_room){
     this.setState({chat_rooms: this.state.chat_rooms.concat(new_chat_room)});
     if (this.addedRoom == new_chat_room.name){
-      //click link or
-      //redirect url?
+      this.transitionTo('Room', {room_id: new_chat_room.id});
+      this.scroll();
       this.addedRoom=""
     }
   },
