@@ -47,3 +47,20 @@ Yak.Backend.prototype.postJSON = function(url, jsonData) {
     return Promise.resolve(data);
   }).catch(this.error);
 }; 
+
+Yak.Backend.prototype.delete = function(url) {
+  return fetch(this.getPath(url), {
+    credentials: 'include',
+    method: 'delete',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'X-CSRF-Token' : Yak.CONST.CSRF_TOKEN
+    }
+  })
+  .then(this.status)
+  .then(this.json)
+  .then(function(data) {
+    return Promise.resolve(data);
+  }).catch(this.error);
+};
