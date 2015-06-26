@@ -19,7 +19,7 @@ feature 'Sending message' do
   end
 
   scenario 'Server sends a message' do
-    find('.room-list-item a', text: 'Roomie').click
+    find('.room-list-item', text: 'Roomie').click
     sleep 2
     Pusher.url = ENV['PUSHER_URL']
     Pusher.trigger(
