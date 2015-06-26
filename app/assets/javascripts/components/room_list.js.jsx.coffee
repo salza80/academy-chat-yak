@@ -11,4 +11,4 @@ Yak.Components.RoomList = React.createClass
       key={room.id}
       onRemoveRoomClick={this.removeRoom} />`
     ).bind(this)
-    `<ul className="nav nav-stacked rooms-list">{rooms}</ul>`
+    `<div className="list-group rooms-list">{rooms}</div>`

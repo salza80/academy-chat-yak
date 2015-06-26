@@ -4,9 +4,8 @@ Yak.Components.Room = React.createClass
     e.preventDefault()
     @props.onRemoveRoomClick(@props.room)
   render: ->
-    `<li className="room-list-item">
-      <Link to="Room" params={{room_id: this.props.room.id}}>
-        {this.props.room.name}
-      </Link>
+    `<Link className="list-group-item room-list-item" to="Room" params={{room_id: this.props.room.id}}>
+      {this.props.room.name}
       <span onClick={this.handleRemoveRoomClick} className="glyphicon glyphicon-remove"></span>
-    </li>`
+    </Link>`
+      

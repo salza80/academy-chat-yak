@@ -1,5 +1,4 @@
-@import 'bootstrap-sprockets';
-@import 'bootstrap';
+//our vaiables
 
 $header-color: #ff942c;
 $link-color: #fff;
@@ -7,6 +6,27 @@ $rooms-color: #24ae6a;
 $rooms-text-color:#000;
 $messages-color: #f5f5f5;
 $tooltip-color: #000;
+
+
+//customises bootstrap variables
+
+
+//list-group (rooms)
+$list-group-bg: transparent;
+$list-group-border: darken($rooms-color, 5%);
+$list-group-hover-bg: lighten($rooms-color, 10%);
+$list-group-hover-color: $rooms-text-color;
+$list-group-active-bg: lighten($rooms-color, 20%);
+$list-group-active-color: darken($rooms-text-color, 5%);
+$list-group-link-bg: transparent;
+
+
+
+
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+
+
 
 html,
 body {
@@ -68,33 +88,15 @@ body {
 .rooms-list {
   margin-top: 20px;
   padding-left: 5px;
-  list-style: none;
 }
 
 .room-list-item {
-  background-color: transparent;
   padding: 1px;
-
-  li {
-    width: 89%;
-    
-  }
-
-  a {
-    color: $rooms-text-color;
-
-    &:hover {
-      background-color: lighten($rooms-color, 10%);
-    }
-
-    &.active {
-      background-color: lighten($rooms-color, 30%);
-    }
-  }
 
   .glyphicon-remove {
     cursor: pointer;
     padding-left: 5px;
+    float: right;
   }
 }
 
