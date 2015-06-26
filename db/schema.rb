@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150619094842) do
+ActiveRecord::Schema.define(version: 20150626211246) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "chat_rooms", force: :cascade do |t|
-    t.string "name"
+    t.string  "name"
+    t.boolean "removed", default: false
   end
 
   create_table "messages", force: :cascade do |t|
