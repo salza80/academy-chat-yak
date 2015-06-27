@@ -39,11 +39,16 @@ Yak.Components.RoomBox = React.createClass({
       this.addedRoom=""
     }
   },
+  handleRemoveRoom: function(chat_room, index) {
+    Yak.backend.delete('chat_rooms/' + chat_room.id);
+    this.state.chat_rooms.splice(index, 1)
+    this.setState({chat_rooms: this.state.chat_rooms});
+  },
   render: function() {
     return (
     <div className="rooms-box">
       <h3>Rooms</h3>
-      <Yak.Components.RoomList chat_rooms={this.state.chat_rooms} />
+      <Yak.Components.RoomList chat_rooms={this.state.chat_rooms} onRemoveRoom={this.handleRemoveRoom} />
       <div className="add-room-form">
         <Yak.Components.RoomForm onAddRoomClick={this.handleAddRoom} />
       </div>
