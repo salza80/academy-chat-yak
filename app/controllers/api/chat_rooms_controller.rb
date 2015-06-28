@@ -1,6 +1,6 @@
 class Api::ChatRoomsController < ApplicationController
   def index
-    @chat_rooms = ChatRoom.all
+    @chat_rooms = ChatRoom.all.select{ |room| !room.removed }
   end
 
   def create
@@ -16,7 +16,11 @@ class Api::ChatRoomsController < ApplicationController
 
   def destroy
     chat_room = ChatRoom.find(params[:id])
-    chat_room.destroy if chat_room.messages.empty?
+    if chat_room.messages.empty?
+      chat_room.destroy
+    else
+      chat_room.removed = true
+    end
   end
 
   def chat_room_params

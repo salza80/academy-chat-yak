@@ -54,6 +54,7 @@ feature 'Sending message' do
     @room1.destroy
     @room2.destroy
     @room3.destroy
+    @room4.destroy
   end
 
   after(:each) do

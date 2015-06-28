@@ -9,6 +9,7 @@ module FeatureTestsSetup
     @room3 = create(:chat_room, name: 'Melbourne') do |chat_room|
       chat_room.messages = build_list(:message, 25)
     end
+    @room4 = create(:chat_room, name: 'Empty Room')
   end
 
   def setup_environment

@@ -38,10 +38,23 @@ feature 'Rooms management' do
     expect(page).to have_css('div.message', count: 25)
   end
 
+  scenario 'Empty room is destroyed on remove' do
+    find('.room-list-item', text: 'Empty Room').find('.glyphicon').click
+    expect(page).not_to have_text('Empty Room')
+    expect(ChatRoom.all.count).to equal(4)
+  end
+
+  scenario 'Not empty room is kept in database on remove' do
+    find('.room-list-item', text: 'Roomie').find('.glyphicon').click
+    expect(page).not_to have_text('Roomie')
+    expect(ChatRoom.all.count).to equal(4)
+  end
+
   after(:all) do
     @room1.destroy
     @room2.destroy
     @room3.destroy
+    @room4.destroy
   end
 
   after(:each) do
