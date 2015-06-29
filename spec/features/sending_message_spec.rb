@@ -2,11 +2,8 @@ require 'rails_helper'
 require 'pusher'
 
 feature 'Sending message' do
-  before(:all) do
-    setup_rooms
-  end
-
   before(:each) do
+    setup_rooms
     setup_environment
     login
   end
@@ -50,21 +47,8 @@ feature 'Sending message' do
     expect(page).to have_no_content('Where am I?!')
   end
 
-  after(:all) do
-    @room1.destroy
-    @room2.destroy
-    @room3.destroy
-    @room4.destroy
-  end
-
   after(:each) do
     OmniAuth.config.mock_auth[:github] = nil
     Capybara.reset!
-  end
-
-  protected
-
-  def trigger(channel, event, data)
-    Pusher.trigger(channel, event, data)
   end
 end

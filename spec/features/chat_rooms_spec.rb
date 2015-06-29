@@ -2,11 +2,8 @@ require 'rails_helper'
 require 'pusher'
 
 feature 'Rooms management' do
-  before(:all) do
-    setup_rooms
-  end
-
   before(:each) do
+    setup_rooms
     setup_environment
     login
   end
@@ -41,20 +38,13 @@ feature 'Rooms management' do
   scenario 'Empty room is destroyed on remove' do
     find('.room-list-item', text: 'Empty Room').find('.glyphicon').click
     expect(page).not_to have_text('Empty Room')
-    expect(ChatRoom.all.count).to equal(4)
+    expect(ChatRoom.all.count).to equal(3)
   end
 
   scenario 'Not empty room is kept in database on remove' do
     find('.room-list-item', text: 'Roomie').find('.glyphicon').click
     expect(page).not_to have_text('Roomie')
     expect(ChatRoom.all.count).to equal(4)
-  end
-
-  after(:all) do
-    @room1.destroy
-    @room2.destroy
-    @room3.destroy
-    @room4.destroy
   end
 
   after(:each) do
