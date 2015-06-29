@@ -1,5 +1,5 @@
 Yak.Components.NoRoomFound = React.createClass
   render: ->
-    `<div>
+    <div>
       <span>No Room Selected</span>
-    </div>`
+    </div>

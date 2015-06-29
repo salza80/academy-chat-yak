@@ -5,7 +5,7 @@ Yak.Components.RoomForm = React.createClass
     this.props.onAddRoomClick({chat_room: {name: roomName}})
     React.findDOMNode(this.refs.roomName).value = ""
   render: ->
-    `<div className="room-form">
+    <div className="room-form">
       <input type="text" placeholder="Room name" ref="roomName" />
       <button onClick={this.addRoomClick}>Add</button>
-    </div>`
+    </div>

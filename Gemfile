@@ -34,6 +34,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'haml-rails', '>= 0.3.4'
 
 gem 'react-rails', '~> 1.0'
+gem 'sprockets-coffee-react'
 
 # Use omniauth for github authentication
 gem 'omniauth-github'
