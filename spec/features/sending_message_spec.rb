@@ -11,26 +11,24 @@ feature 'Sending message' do
   scenario 'User sends a message' do
     fill_in 'Enter message', with: 'Hello world!'
     click_button 'Send'
-    wait_for_pusher
     expect(page).to have_text('Hello world!')
   end
 
   scenario 'Server sends a message' do
-    find('.room-list-item', text: 'Roomie').click
-    sleep 2
+    find('.room-list-item', text: 'Berlin').click
+    wait_for_room_change @room2.id
     Pusher.url = ENV['PUSHER_URL']
     Pusher.trigger(
-      @room1.channel, \
+      @room2.channel, \
       'new_message', \
       '{"id": 12,' \
       '"body":"hello you!",' \
       '"created_at":"2015-06-04T10:35:42.778Z",' \
       '"user": "franek"}'
     )
-    wait_for_pusher
-    screenshot_and_save_page
+    # screenshot_and_save_page
     expect(page).to have_content('hello you!')
-    screenshot_and_save_page
+    # screenshot_and_save_page
   end
 
   scenario 'Server sends a message to different channel' do
@@ -43,7 +41,6 @@ feature 'Sending message' do
       '"created_at":"2015-06-04T10:35:42.778Z",' \
       '"user": "franek"}'
     )
-    wait_for_pusher
     expect(page).to have_no_content('Where am I?!')
   end
 
