@@ -76,7 +76,7 @@ Yak.Components.MessageBox = React.createClass({
     }
     user_desc = " user online"
     if (this.state.user_count > 1){
-      user_desc = " users are online"
+      user_desc = " users online"
     }
     return (
       <div className="message-box">
