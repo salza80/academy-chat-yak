@@ -48,8 +48,8 @@ module FeatureTestsSetup
   end
 
   def multi_session_clean_up
-    @session1.driver.browser.quit
-    @session2.driver.browser.quit
+    @session1.driver.quit
+    @session2.driver.quit
     Capybara.reset!
     Capybara.reset_session!
   end
