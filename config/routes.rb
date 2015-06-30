@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :chat_rooms, only: [:index] do
       resources :messages, only: [:index, :new, :create]
     end
+    post '/pusher/auth', to: 'pusher#auth'
   end
   get '/home', to: 'home#index'
   get '/login', to: 'sessions#new', as: :login

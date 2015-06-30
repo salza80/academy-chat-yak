@@ -7,7 +7,7 @@ Yak.PusherManager = {
 
 Yak.PusherManager.addChannelGroup = function (groupName, events){
     if (this.pusher === undefined){
-      this.pusher = new Pusher(Yak.CONST.PUSHER_KEY);
+      this.pusher = new Pusher(Yak.CONST.PUSHER_KEY, { authEndpoint: '/api/pusher/auth' });
     }
     this.channelGroup[groupName] = new Yak.ChannelGroupManager(this.pusher, events);
   };
