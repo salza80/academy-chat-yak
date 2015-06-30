@@ -27,6 +27,14 @@ Yak.Components.RoomBox = React.createClass({
     var node = this.getDOMNode();
     node.scrollTop = node.scrollHeight;
   },
+  selectFirstRoom: function() {
+    if ( this.state.chat_rooms.length > 0) {
+      this.transitionTo('Room', {room_id: this.state.chat_rooms[0].id})
+    }
+    else {
+      this.transitionTo('NoRoom')
+    };
+  },
   handleAddRoom: function(chat_room) {
     this.addedRoom = chat_room.chat_room.name
     Yak.backend.postJSON('chat_rooms.json', chat_room)
@@ -43,6 +51,8 @@ Yak.Components.RoomBox = React.createClass({
     Yak.backend.delete('chat_rooms/' + chat_room.id);
     this.state.chat_rooms.splice(index, 1)
     this.setState({chat_rooms: this.state.chat_rooms});
+    this.selectFirstRoom();
+
   },
   render: function() {
     return (

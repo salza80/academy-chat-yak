@@ -12,8 +12,8 @@ Yak.Components.MessageBox = React.createClass({
     this.MessagesPusher = Yak.PusherManager.channelGroup["Messages"]
     Yak.PusherManager.addChannelGroup('RoomPresence',
       [
-        {eventName: "pusher:subscription_succeeded", callback:  this.handlePresenceSubscriptionSucceeded }
-        {eventName: "pusher:member_added", callback:  this.handlePresenceMemberAdded }
+        {eventName: "pusher:subscription_succeeded", callback:  this.handlePresenceSubscriptionSucceeded },
+        {eventName: "pusher:member_added", callback:  this.handlePresenceMemberAdded },
         {eventName: "pusher:member_removed", callback:  this.handlePresenceMemberRemoved }
       ] 
     )
