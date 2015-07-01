@@ -1,6 +1,5 @@
 class Api::PusherController < ApplicationController
   protect_from_forgery except: :auth
-  before_action :auth, :set_pusher
 
   def auth
     if current_user
@@ -14,7 +13,4 @@ class Api::PusherController < ApplicationController
     end
   end
 
-  def set_pusher
-    Pusher.url = ENV['PUSHER_URL']
-  end
 end
