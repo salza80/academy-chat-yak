@@ -8,17 +8,10 @@ feature 'Rooms management' do
     login
   end
 
-  scenario 'User switches chat rooms' do
+  scenario 'user switches chat rooms' do
     expect(page).to have_text('Hi!')
     find('.room-list-item', text: 'Berlin').click
     expect(page).to have_text('Hello Berlin')
-    expect(page).to have_no_text('Hi!')
-  end
-
-  scenario 'User adds new room' do
-    fill_in 'Room name', with: 'New room'
-    click_button 'Add'
-    expect(page).to have_text('New room')
     expect(page).to have_no_text('Hi!')
   end
 
@@ -33,12 +26,6 @@ feature 'Rooms management' do
     expect(page).to have_css('div.message', count: 20)
     page.find('a', text: 'Get older messages').click
     expect(page).to have_css('div.message', count: 25)
-  end
-
-  scenario 'Empty room is destroyed on remove' do
-    find('.room-list-item', text: 'Empty Room').find('.glyphicon').click
-    expect(page).not_to have_text('Empty Room')
-    expect(ChatRoom.all.count).to equal(3)
   end
 
   scenario 'Not empty room is kept in database on remove' do

@@ -45,6 +45,8 @@ module FeatureTestsSetup
   def multi_session_login
     @session1 =  new_session_login 'user', '1'
     @session2 =  new_session_login 'user', '2'
+    session_wait_for_pusher @session1
+    session_wait_for_pusher @session2
   end
 
   def multi_session_clean_up
