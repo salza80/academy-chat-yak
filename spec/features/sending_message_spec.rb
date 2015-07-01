@@ -8,6 +8,11 @@ feature 'Sending message' do
     login
   end
 
+  scenario 'User Logs Out' do
+    click_link 'Log out'
+    expect(page).to have_text('You have to be logged in to chat!')
+  end
+
   scenario 'User sends a message' do
     fill_in 'Enter message', with: 'Hello world!'
     click_button 'Send'
@@ -16,7 +21,7 @@ feature 'Sending message' do
 
   scenario 'Server sends a message' do
     find('.room-list-item', text: 'Berlin').click
-    wait_for_room_change @room2.id
+    wait_for_room_change @room2.channel
     Pusher.url = ENV['PUSHER_URL']
     Pusher.trigger(
       @room2.channel, \

@@ -5,16 +5,15 @@ module WaitForPusher
     end
   end
 
-  def wait_for_room_change(room_id)
+  def wait_for_room_change(channel)
     Timeout.timeout(Capybara.default_wait_time) do
-      loop until room_connected(room_id)
+      loop until room_connected(channel)
     end
   end
 
-  def room_connected(room_id)
+  def room_connected(channel)
     channel_path = "Yak.PusherManager.channelGroup['Messages'].channel"
-    channel_name = 'room_' + room_id.to_s
-    page.evaluate_script(channel_path + ".name == '" + channel_name +
+    page.evaluate_script(channel_path + ".name == '" + channel +
      "' && " + channel_path + '.subscribed == true')
   end
 

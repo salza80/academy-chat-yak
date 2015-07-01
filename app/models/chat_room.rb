@@ -4,6 +4,6 @@ class ChatRoom < ActiveRecord::Base
   validates :name, presence: true
 
   def channel
-    'room_' + id.to_s
+    'presence-room_' + id.to_s
   end
 end

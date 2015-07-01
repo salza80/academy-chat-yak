@@ -4,20 +4,19 @@ Yak.Components.MessageBox = React.createClass({
       messages: [],
       selected_room: {"id": 0, "name": "", "channel":""},
       all_messages_loaded: true,
-      user_count: undefined
+      users: []
     };
   },
   componentDidMount: function() {
-    Yak.PusherManager.addChannelGroup('Messages',[{eventName: "new_message", callback:  this.handleNewPusherMessage }] )
-    this.MessagesPusher = Yak.PusherManager.channelGroup["Messages"]
-    Yak.PusherManager.addChannelGroup('RoomPresence',
+    Yak.PusherManager.addChannelGroup('Messages',
       [
+        {eventName: "new_message", callback:  this.handleNewPusherMessage },
         {eventName: "pusher:subscription_succeeded", callback:  this.handlePresenceSubscriptionSucceeded },
         {eventName: "pusher:member_added", callback:  this.handlePresenceMemberAdded },
         {eventName: "pusher:member_removed", callback:  this.handlePresenceMemberRemoved }
       ] 
     )
-    this.PresencePusher = Yak.PusherManager.channelGroup["RoomPresence"]
+    this.MessagesPusher = Yak.PusherManager.channelGroup["Messages"]
     this.fetchMessagesFromServer(this.props.params.room_id);
   },
   componentWillUnmount: function() {
@@ -32,14 +31,13 @@ Yak.Components.MessageBox = React.createClass({
   },
   fetchMessagesFromServer: function(room_id) {
     Yak.backend.fetch('chat_rooms/' + room_id  + '/messages.json').then(function(data){
-    this.MessagesPusher.subscribe(data.selected_room.channel);
-    this.PresencePusher.subscribe("presence-" + room_id);
     this.setState({
       selected_room: data.selected_room,
       messages: data.messages,
       all_messages_loaded: data.all_messages,
-      user_count: undefined
+      users: []
     }); 
+    this.MessagesPusher.subscribe(data.selected_room.channel);
     }.bind(this))
   },
   fetchPartFromServer: function() {
@@ -48,6 +46,9 @@ Yak.Components.MessageBox = React.createClass({
     Yak.backend.fetch('chat_rooms/' + this.state.selected_room.id + '/messages.json?last_id=' + last_id).then(function (data) {
       this.setState({messages: data.messages.concat(this.state.messages), all_messages_loaded: data.all_messages});
     }.bind(this))
+  },
+  addUsers: function(users){
+    this.setState({users: this.state.users.concat(users)});
   },
   handleMessageSubmit: function(message) {
     Yak.backend.postJSON('chat_rooms/' + this.state.selected_room.id + '/messages.json', message)
@@ -58,13 +59,22 @@ Yak.Components.MessageBox = React.createClass({
     this.setState({messages: newMessages});
   },
   handlePresenceSubscriptionSucceeded: function(members) {
-    this.setState({user_count: members.count})
+    var users = [];
+     members.each(function(member) {
+      users.push({id: member.id, name: member.info.name});
+    });
+    this.addUsers(users);
   },
-  handlePresenceMemberAdded:function(members) {
-    this.setState({user_count: this.state.user_count + 1 })
+  handlePresenceMemberAdded:function(member) {
+    var users = [];
+    users.push({id: member.id, name: member.info.name});
+   this.addUsers(users);
   },
-  handlePresenceMemberRemoved:function(members) {
-    this.setState({user_count: this.state.user_count - 1 })
+  handlePresenceMemberRemoved:function(member) {
+   users = this.state.users.filter(function(user){
+      return user.id !== member.id
+   });
+    this.setState({users: users});
   },
   render: function() {
     var messageForm, olderMessagesLink;
@@ -74,13 +84,13 @@ Yak.Components.MessageBox = React.createClass({
         olderMessagesLink = <a onClick={this.fetchPartFromServer}>Get older messages</a>
       }
     }
-    user_desc = " user online"
-    if (this.state.user_count > 1){
+    user_desc = undefined
+    if (this.state.users.length > 1){
       user_desc = " users online"
-    }
+    } else { user_desc = " user online"}
     return (
       <div className="message-box">
-        <h1>{this.state.selected_room.name} - {this.state.user_count} {user_desc}</h1>
+        <h1>{this.state.selected_room.name} - {this.state.users.length} {user_desc}</h1>
          {olderMessagesLink}
         <Yak.Components.MessageList messages={this.state.messages} />
         {messageForm}

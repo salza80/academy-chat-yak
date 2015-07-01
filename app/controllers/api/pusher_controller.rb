@@ -12,5 +12,4 @@ class Api::PusherController < ApplicationController
       render text: 'Forbidden', status: '403'
     end
   end
-
 end
