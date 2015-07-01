@@ -20,6 +20,8 @@ feature 'pusher_actions' do
 
   scenario 'Empty room is destroyed on remove' do
     @session1.find('.room-list-item', text: 'Empty Room').find('.glyphicon').click
+    @session1.click_button('Yes')
+    expect(@session1).not_to have_text('Are you sure?')
     expect(@session1).not_to have_text('Empty Room')
     # test room is removed for other users
     # commented out, not implemented yet

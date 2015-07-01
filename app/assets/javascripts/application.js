@@ -17,14 +17,11 @@
 //= require moment
 //= require react
 //= require react_router
+//= require react_bootstrap
 //= require_tree
 
 //= require react_router_ujs
 
-
 var Yak = Yak || {};
 Yak.Components = {};
 Yak.CONST = {};
-
-
-

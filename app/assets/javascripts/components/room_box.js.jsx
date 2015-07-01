@@ -4,7 +4,7 @@ var State = ReactRouter.State;
 Yak.Components.RoomBox = React.createClass({
   mixins: [Navigation, State ],
   getInitialState: function() {
-    return {chat_rooms: []};
+    return {chat_rooms: [], modalOpened: false};
   },
   componentDidMount: function() {
     Yak.PusherManager.addChannelGroup('Rooms', [{eventName: "new_room", callback:  this.handlePusherNewRoom}])
@@ -51,17 +51,30 @@ Yak.Components.RoomBox = React.createClass({
     Yak.backend.delete('chat_rooms/' + chat_room.id);
     this.state.chat_rooms.splice(index, 1)
     this.setState({chat_rooms: this.state.chat_rooms});
+    this.hideModal();
     this.selectFirstRoom();
-
+  },
+  hideModal: function() {
+    React.unmountComponentAtNode(document.getElementById('modal'));
+  },
+  confirmRemoveModalOpen: function(chat_room, index) {
+    React.render(<ConfirmRemoveModal
+      hideModal={this.hideModal}
+      onConfirmClick={this.handleRemoveRoom}
+      room={chat_room}
+      index={index} />, document.getElementById('modal'));
   },
   render: function() {
     return (
     <div className="rooms-box">
       <h3>Rooms</h3>
-      <Yak.Components.RoomList chat_rooms={this.state.chat_rooms} onRemoveRoom={this.handleRemoveRoom} />
+      <Yak.Components.RoomList
+        chat_rooms={this.state.chat_rooms}
+        onRemoveRoomClick={this.confirmRemoveModalOpen} />
       <div className="add-room-form">
         <Yak.Components.RoomForm onAddRoomClick={this.handleAddRoom} />
       </div>
+      <div id="modal" />
     </div>
     );
   }
