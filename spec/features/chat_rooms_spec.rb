@@ -37,12 +37,14 @@ feature 'Rooms management' do
 
   scenario 'Empty room is destroyed on remove' do
     find('.room-list-item', text: 'Empty Room').find('.glyphicon').click
-    expect(page).not_to have_text('Empty Room')
+    click_button('Yes')
+    expect(page).not_to have_text('Are you sure?')
     expect(ChatRoom.all.count).to equal(3)
   end
 
   scenario 'Not empty room is kept in database on remove' do
     find('.room-list-item', text: 'Roomie').find('.glyphicon').click
+    click_button('Yes')
     expect(page).not_to have_text('Roomie')
     expect(ChatRoom.all.count).to equal(4)
   end
