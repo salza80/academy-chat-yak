@@ -18,15 +18,14 @@ feature 'pusher_actions' do
     expect(@session2).to have_no_css('h1', text: 'New room')
   end
 
-  scenario 'Empty room is destroyed on remove' do
+  scenario 'Room is removed from all sessions' do
     @session1.find('.room-list-item', text: 'Empty Room').find('.glyphicon').click
     @session1.click_button('Yes')
     expect(@session1).not_to have_text('Are you sure?')
     expect(@session1).not_to have_text('Empty Room')
-    # test room is removed for other users
-    # commented out, not implemented yet
-    # expect(@session2).not_to have_text('Empty Room')
-    expect(ChatRoom.all.count).to equal(3)
+    expect(@session1).to have_css('h1', text: 'Roomie')
+    expect(@session2).not_to have_text('Empty Room')
+    expect(@session2).to have_css('h1', text: 'Roomie')
   end
 
   after(:each) do

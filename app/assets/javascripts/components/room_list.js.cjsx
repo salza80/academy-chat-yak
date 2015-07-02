@@ -1,9 +1,6 @@
 Yak.Components.RoomList = React.createClass
-  getRoom: (id) ->
-    for index in [0..@props.chat_rooms.length]
-      return index if @props.chat_rooms[index].id == id
   removeRoom: (chat_room) ->
-    @props.onRemoveRoomClick(chat_room, @getRoom(chat_room.id))
+    @props.onRemoveRoomClick(chat_room)
   render: ->
     rooms = @props.chat_rooms.map ((room) =>
       <Yak.Components.Room room={room}

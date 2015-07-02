@@ -7,7 +7,12 @@ Yak.Components.RoomBox = React.createClass({
     return {chat_rooms: [], modalOpened: false};
   },
   componentDidMount: function() {
-    Yak.PusherManager.addChannelGroup('Rooms', [{eventName: "new_room", callback:  this.handlePusherNewRoom}])
+    Yak.PusherManager.addChannelGroup('Rooms',
+      [
+        {eventName: "new_room", callback:  this.handlePusherNewRoom},
+        {eventName: "remove_room", callback: this.handlePusherRemoveRoom}
+      ]
+    );
     this.RoomsPusher = Yak.PusherManager.channelGroup["Rooms"]
     this.RoomsPusher.subscribe('chat_rooms')
     this.fetchRoomsFromServer();
@@ -18,9 +23,10 @@ Yak.Components.RoomBox = React.createClass({
   fetchRoomsFromServer: function() {
     Yak.backend.fetch('chat_rooms.json').then(function(data) {
       this.setState({chat_rooms: data.chat_rooms});
-      if (this.getParams().room_id === undefined && data.chat_rooms.length > 0){
-        this.transitionTo('Room', {room_id: data.chat_rooms[0].id});
-      }
+      this.selectFirstRoom();
+      // if (this.getParams().room_id === undefined && data.chat_rooms.length > 0){
+      //   this.transitionTo('Room', {room_id: data.chat_rooms[0].id});
+      // }
     }.bind(this))
   },
   scroll: function(){
@@ -28,10 +34,9 @@ Yak.Components.RoomBox = React.createClass({
     node.scrollTop = node.scrollHeight;
   },
   selectFirstRoom: function() {
-    if ( this.state.chat_rooms.length > 0) {
+    if (this.state.chat_rooms.length > 0) {
       this.transitionTo('Room', {room_id: this.state.chat_rooms[0].id})
-    }
-    else {
+    } else {
       this.transitionTo('NoRoom')
     };
   },
@@ -47,12 +52,12 @@ Yak.Components.RoomBox = React.createClass({
       this.addedRoom=""
     }
   },
-  handleRemoveRoom: function(chat_room, index) {
+  handleRemoveRoom: function(chat_room) {
     Yak.backend.delete('chat_rooms/' + chat_room.id);
-    this.state.chat_rooms.splice(index, 1)
-    this.setState({chat_rooms: this.state.chat_rooms});
+  },
+  handlePusherRemoveRoom: function(chat_room) {
+    this.fetchRoomsFromServer();
     this.hideModal();
-    this.selectFirstRoom();
   },
   hideModal: function() {
     React.unmountComponentAtNode(document.getElementById('modal'));

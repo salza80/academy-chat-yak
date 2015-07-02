@@ -35,6 +35,13 @@ feature 'Rooms management' do
     expect(ChatRoom.all.count).to equal(4)
   end
 
+  scenario 'Empty room is destroyed on remove' do
+    find('.room-list-item', text: 'Empty Room').find('.glyphicon').click
+    click_button('Yes')
+    expect(page).not_to have_text('Empty Room')
+    expect(ChatRoom.all.count).to equal(3)
+  end
+
   after(:each) do
     OmniAuth.config.mock_auth[:github] = nil
     Capybara.reset!
