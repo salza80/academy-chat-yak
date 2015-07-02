@@ -11,11 +11,11 @@ feature 'pusher_actions' do
     @session1.click_button 'Add'
     expect(@session1).to have_css('span', text: 'New room')
     # test it clicks on new room automatically
-    expect(@session1).to have_css('h1', text: 'New room')
+    expect(@session1).to have_css('h3', text: 'New room')
     # test other users see new room in list
     expect(@session1).to have_css('span', text: 'New room')
     # test it does not select new room for other users
-    expect(@session2).to have_no_css('h1', text: 'New room')
+    expect(@session2).to have_no_css('h3', text: 'New room')
   end
 
   scenario 'Room is removed from all sessions' do
@@ -23,9 +23,9 @@ feature 'pusher_actions' do
     @session1.click_button('Yes')
     expect(@session1).not_to have_text('Are you sure?')
     expect(@session1).not_to have_text('Empty Room')
-    expect(@session1).to have_css('h1', text: 'Roomie')
+    expect(@session1).to have_css('h3', text: 'Roomie')
     expect(@session2).not_to have_text('Empty Room')
-    expect(@session2).to have_css('h1', text: 'Roomie')
+    expect(@session2).to have_css('h3', text: 'Roomie')
   end
 
   after(:each) do

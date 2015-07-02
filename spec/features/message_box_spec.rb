@@ -28,20 +28,20 @@ feature 'pusher_actions' do
   scenario 'number/list of users in chatroom displays' do
     @session1.find('.room-list-item', text: 'Melbourne').click
     @session2.find('.room-list-item', text: 'Berlin').click
-    expect(@session1).to have_css('h1', text: '1 user online')
+    expect(@session1).to have_css('h3', text: '1 user online')
     expect(@session1).to have_css('.user-list-col', text: 'user1')
     expect(@session1).to have_no_css('.user-list-col', text: 'user2')
-    expect(@session2).to have_css('h1', text: '1 user online')
+    expect(@session2).to have_css('h3', text: '1 user online')
     # test adding a user
     @session2.find('.room-list-item', text: 'Melbourne').click
-    expect(@session2).to have_css('h1', text: '2 users online')
+    expect(@session2).to have_css('h3', text: '2 users online')
     expect(@session2).to have_css('.user-list-col', text: 'user1')
-    expect(@session1).to have_css('h1', text: '2 users online')
+    expect(@session1).to have_css('h3', text: '2 users online')
     expect(@session1).to have_css('.user-list-col', text: 'user2')
     # test removing a user
     @session1.find('.room-list-item', text: 'Berlin').click
-    expect(@session1).to have_css('h1', text: '1 user online')
-    expect(@session2).to have_css('h1', text: '1 user online')
+    expect(@session1).to have_css('h3', text: '1 user online')
+    expect(@session2).to have_css('h3', text: '1 user online')
     expect(@session2).to have_no_css('.user-list-col', text: 'user1')
   end
 
