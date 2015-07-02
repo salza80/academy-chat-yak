@@ -89,11 +89,19 @@ Yak.Components.MessageBox = React.createClass({
       user_desc = " users online"
     } else { user_desc = " user online"}
     return (
-      <div className="message-box">
-        <h1>{this.state.selected_room.name} - {this.state.users.length} {user_desc}</h1>
-         {olderMessagesLink}
-        <Yak.Components.MessageList messages={this.state.messages} />
-        {messageForm}
+      <div className="container-fluid container message-box">
+        <div className ='row'>
+          <div className='col-sm-10 message-list-col'>
+           <h3>{this.state.selected_room.name} - {this.state.users.length} {user_desc}</h3>
+           {olderMessagesLink}
+          <Yak.Components.MessageList messages={this.state.messages} />
+          {messageForm}            
+          </div>
+          <div className='col-sm-2 user-list-col'>
+            <h3>User List</h3>
+            <Yak.Components.UserList users={this.state.users} />
+          </div>
+        </div>
       </div>
     );
   }

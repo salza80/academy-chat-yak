@@ -1,14 +1,14 @@
 //our vaiables
 
 $header-color: #ff942c;
-$link-color: #fff;
+$header-link-color: #fff;
 $rooms-color: #24ae6a;
 $rooms-text-color:#000;
 $messages-color: #f5f5f5;
 $tooltip-color: #000;
 
 //customises bootstrap variables
-
+$navbar-default-link-color:  #fff;
 //list-group (rooms)
 $list-group-bg: transparent;
 $list-group-border: darken($rooms-color, 5%);
@@ -34,7 +34,7 @@ body {
 
   a,
   span {
-    color: $link-color;
+    color: $header-link-color;
   }
 
   .navbar-left {
@@ -45,6 +45,10 @@ body {
   .navbar-header {
     margin-left: 20px;
   }
+}
+
+.navbar-right li a:hover {
+  background-color: transparent;
 }
 
 .application-container {
@@ -117,7 +121,6 @@ body {
 .message-box {
   padding: 10px 20px;
   margin-bottom: 200px;
-  overflow-y: scroll;
   height: 100%;
 }
 
@@ -128,14 +131,26 @@ body {
   width: 60%;
 }
 
+.message-list-col {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+// .message-list {
+// }
+
 .message-body {
   width: 80%;
   margin-right: 5px;
 }
 
-.navbar-right li a:hover {
-  background-color: transparent;
+.user-list-col {
+  height: 100%;
+  overflow-y: scroll;
 }
+
+// .user-list {
+// }
 
 .log-in {
   width: 400px;
