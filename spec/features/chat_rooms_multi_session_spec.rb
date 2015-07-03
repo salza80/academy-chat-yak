@@ -18,15 +18,23 @@ feature 'pusher_actions' do
     expect(@session2).to have_no_css('h3', text: 'New room')
   end
 
-  scenario 'Room is removed from all sessions' do
+  scenario 'Room is removed from all sessions and active users in the room exit' do
+    @session3 =  new_session_login 'user', '3'
+    @session2.find('.room-list-item', text: 'Empty Room').click
+    @session2.find('.room-list-item', text: 'Berlin').click
     @session1.find('.room-list-item', text: 'Empty Room').find('.glyphicon').click
     @session1.click_button('Yes')
     expect(@session1).not_to have_text('Are you sure?')
     expect(@session1).not_to have_text('Empty Room')
     expect(@session1).to have_css('h3', text: 'Roomie')
+    #test other users in the room have exited
     expect(@session2).not_to have_text('Empty Room')
     expect(@session2).to have_css('h3', text: 'Roomie')
+    #test other users not in the room, have not changed room
+    expect(@session3).not_to have_text('Empty Room')
+    expect(@session3).to have_css('h3', text: 'Berlin')
   end
+
 
   after(:each) do
     multi_session_clean_up
