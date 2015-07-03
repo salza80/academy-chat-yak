@@ -17,20 +17,24 @@ Yak.Components.MessageBox = React.createClass({
       ] 
     )
     this.MessagesPusher = Yak.PusherManager.channelGroup["Messages"]
-    this.fetchMessagesFromServer(this.props.params.room_id);
+    this.fetchMessagesFromServer(this.props.params.room_id).then(function(data){
+      this.scrollMessagesDown();
+    }.bind(this))
   },
   componentWillUnmount: function() {
     this.MessagesPusher.unsubscribe();
   },
-  componentDidUpdate: function() {
-    var node = this.getDOMNode();
-    node.scrollTop = node.scrollHeight;
+  componentWillUpdate: function() {
+    var node = React.findDOMNode(this.refs.messageListCol);
+    this.wasAtBottomMessageList =  node.scrollTop + node.offsetHeight === node.scrollHeight
   },
   componentWillReceiveProps: function(props) {
-    this.fetchMessagesFromServer(props.params.room_id)
+    this.fetchMessagesFromServer(props.params.room_id).then(function(data){
+      this.scrollMessagesDown();
+    }.bind(this))
   },
   fetchMessagesFromServer: function(room_id) {
-    Yak.backend.fetch('chat_rooms/' + room_id  + '/messages.json').then(function(data){
+    return Yak.backend.fetch('chat_rooms/' + room_id  + '/messages.json').then(function(data){
     this.setState({
       selected_room: data.selected_room,
       messages: data.messages,
@@ -38,6 +42,7 @@ Yak.Components.MessageBox = React.createClass({
       users: []
     }); 
     this.MessagesPusher.subscribe(data.selected_room.channel);
+    return Promise.resolve(data);
     }.bind(this))
   },
   fetchPartFromServer: function() {
@@ -45,18 +50,28 @@ Yak.Components.MessageBox = React.createClass({
     var last_id = size > 0 ? this.state.messages[0].id : -1;
     Yak.backend.fetch('chat_rooms/' + this.state.selected_room.id + '/messages.json?last_id=' + last_id).then(function (data) {
       this.setState({messages: data.messages.concat(this.state.messages), all_messages_loaded: data.all_messages});
+      this.scrollMessagesUp;
     }.bind(this))
   },
   addUsers: function(users){
     this.setState({users: this.state.users.concat(users)});
   },
+  scrollMessagesDown: function(onlyWhenAtBottom){
+    var shouldScrollDown = true
+    var node = React.findDOMNode(this.refs.messageListCol);
+    if (onlyWhenAtBottom){ shouldScrollDown = this.wasAtBottomMessageList
+    if (shouldScrollDown){ node.scrollTop = node.scrollHeight;}
+  },
+  scrollMessagesUp: function(){
+    var node = React.findDOMNode(this.refs.messageListCol);
+    node.scrollTop = this.scrollTop + (node.scrollHeight - this.scrollHeight);
+  },
   handleMessageSubmit: function(message) {
     Yak.backend.postJSON('chat_rooms/' + this.state.selected_room.id + '/messages.json', message)
   },
   handleNewPusherMessage: function(message) {
-    var messages = this.state.messages;
-    var newMessages = messages.concat(message)
-    this.setState({messages: newMessages});
+    this.setState({messages: this.state.messages.concat(message)});
+    this.scrollMessagesDown(true);
   },
   handlePresenceSubscriptionSucceeded: function(members) {
     var users = [];
@@ -91,7 +106,7 @@ Yak.Components.MessageBox = React.createClass({
     return (
       <div className="container-fluid container message-box">
         <div className ='row'>
-          <div className='col-sm-10 message-list-col'>
+          <div className='col-sm-10 message-list-col' ref="messageListCol">
            <h3>{this.state.selected_room.name} - {this.state.users.length} {user_desc}</h3>
            {olderMessagesLink}
           <Yak.Components.MessageList messages={this.state.messages} />
