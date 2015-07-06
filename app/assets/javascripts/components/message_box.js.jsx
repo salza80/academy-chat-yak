@@ -30,19 +30,20 @@ Yak.Components.MessageBox = React.createClass({
   },
   componentWillReceiveProps: function(props) {
     this.fetchMessagesFromServer(props.params.room_id).then(function(data){
+      debugger;
       this.scrollMessagesDown();
     }.bind(this))
   },
   fetchMessagesFromServer: function(room_id) {
     return Yak.backend.fetch('chat_rooms/' + room_id  + '/messages.json').then(function(data){
-    this.setState({
-      selected_room: data.selected_room,
-      messages: data.messages,
-      all_messages_loaded: data.all_messages,
-      users: []
-    }); 
-    this.MessagesPusher.subscribe(data.selected_room.channel);
-    return Promise.resolve(data);
+      this.setState({
+        selected_room: data.selected_room,
+        messages: data.messages,
+        all_messages_loaded: data.all_messages,
+        users: []
+      }); 
+      this.MessagesPusher.subscribe(data.selected_room.channel);
+      return Promise.resolve(data);
     }.bind(this))
   },
   fetchPartFromServer: function() {
@@ -59,8 +60,8 @@ Yak.Components.MessageBox = React.createClass({
   scrollMessagesDown: function(onlyWhenAtBottom){
     var shouldScrollDown = true
     var node = React.findDOMNode(this.refs.messageListCol);
-    if (onlyWhenAtBottom){ shouldScrollDown = this.wasAtBottomMessageList
-    if (shouldScrollDown){ node.scrollTop = node.scrollHeight;}
+    if (onlyWhenAtBottom){ shouldScrollDown = this.wasAtBottomMessageList; }
+    if (shouldScrollDown){ node.scrollTop = node.scrollHeight; }
   },
   scrollMessagesUp: function(){
     var node = React.findDOMNode(this.refs.messageListCol);
