@@ -1,6 +1,6 @@
 class Api::ChatRoomsController < ApplicationController
   def index
-    @chat_rooms = ChatRoom.all
+    @chat_rooms = ChatRoom.active
   end
 
   def create

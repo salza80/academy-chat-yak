@@ -21,12 +21,12 @@ Yak.Components.RoomBox = React.createClass({
     this.RoomsPusher.unsubscribe();
   },
   fetchRoomsFromServer: function() {
-    Yak.backend.fetch('chat_rooms.json').then(function(data) {
+    return Yak.backend.fetch('chat_rooms.json').then(function(data) {
       this.setState({chat_rooms: data.chat_rooms});
-      this.selectFirstRoom();
-      // if (this.getParams().room_id === undefined && data.chat_rooms.length > 0){
-      //   this.transitionTo('Room', {room_id: data.chat_rooms[0].id});
-      // }
+      if (this.getParams().room_id === undefined && data.chat_rooms.length > 0){
+        this.transitionTo('Room', {room_id: data.chat_rooms[0].id});
+      }
+      return Promise.resolve(data);
     }.bind(this))
   },
   scroll: function(){
@@ -39,6 +39,11 @@ Yak.Components.RoomBox = React.createClass({
     } else {
       this.transitionTo('NoRoom')
     };
+  },
+  redirectFromRemovedRoom: function(chat_room) {
+    if (this.getParams().room_id == chat_room.id.toString()) {
+      this.selectFirstRoom();
+    }
   },
   handleAddRoom: function(chat_room) {
     this.addedRoom = chat_room.chat_room.name
@@ -56,7 +61,9 @@ Yak.Components.RoomBox = React.createClass({
     Yak.backend.delete('chat_rooms/' + chat_room.id);
   },
   handlePusherRemoveRoom: function(chat_room) {
-    this.fetchRoomsFromServer();
+    this.fetchRoomsFromServer().then(function(data) {
+      this.redirectFromRemovedRoom(chat_room);
+    }.bind(this));
     this.hideModal();
   },
   hideModal: function() {

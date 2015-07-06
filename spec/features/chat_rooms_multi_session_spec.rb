@@ -28,14 +28,13 @@ feature 'pusher_actions' do
     expect(@session1).not_to have_text('Are you sure?')
     expect(@session1).not_to have_text('Empty Room')
     expect(@session1).to have_css('h3', text: 'Roomie')
-    #test other users in the room have exited
+    # test other users in the room have exited
     expect(@session2).not_to have_text('Empty Room')
     expect(@session2).to have_css('h3', text: 'Roomie')
-    #test other users not in the room, have not changed room
+    # test other users not in the room, have not changed room
     expect(@session3).not_to have_text('Empty Room')
     expect(@session3).to have_css('h3', text: 'Berlin')
   end
-
 
   after(:each) do
     multi_session_clean_up

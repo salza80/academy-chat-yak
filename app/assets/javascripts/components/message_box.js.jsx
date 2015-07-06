@@ -30,7 +30,6 @@ Yak.Components.MessageBox = React.createClass({
   },
   componentWillReceiveProps: function(props) {
     this.fetchMessagesFromServer(props.params.room_id).then(function(data){
-      debugger;
       this.scrollMessagesDown();
     }.bind(this))
   },
