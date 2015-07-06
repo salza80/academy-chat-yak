@@ -1,6 +1,6 @@
 class Api::ChatRoomsController < ApplicationController
   def index
-    @chat_rooms = ChatRoom.all.select { |room| !room.removed }
+    @chat_rooms = ChatRoom.all
   end
 
   def create
