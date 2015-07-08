@@ -66,6 +66,13 @@ Yak.Components.MessageBox = React.createClass({
     var node = React.findDOMNode(this.refs.messageListCol);
     node.scrollTop = this.scrollTop + (node.scrollHeight - this.scrollHeight);
   },
+  getUserOnlineDesc: function(){
+     user_desc = undefined
+    if (this.state.users.length > 1){
+      user_desc = " users online"
+    } else { user_desc = " user online"}
+    return this.state.users.length.toString() + " " +  user_desc
+  },
   handleMessageSubmit: function(message) {
     Yak.backend.postJSON('chat_rooms/' + this.state.selected_room.id + '/messages.json', message)
   },
@@ -99,15 +106,11 @@ Yak.Components.MessageBox = React.createClass({
         olderMessagesLink = <a onClick={this.fetchPartFromServer}>Get older messages</a>
       }
     }
-    user_desc = undefined
-    if (this.state.users.length > 1){
-      user_desc = " users online"
-    } else { user_desc = " user online"}
     return (
       <div className="container-fluid container message-box">
         <div className ='row'>
           <div className='col-sm-10 message-list-col' ref="messageListCol">
-           <h3>{this.state.selected_room.name} - {this.state.users.length} {user_desc}</h3>
+           <h3>{this.state.selected_room.name} - {this.getUserOnlineDesc()}</h3>
            {olderMessagesLink}
           <Yak.Components.MessageList messages={this.state.messages} />
           {messageForm}            
