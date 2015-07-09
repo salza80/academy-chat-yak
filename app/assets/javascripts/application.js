@@ -15,13 +15,14 @@
 //= require turbolinks
 //= bootstrap-sprockets
 //= require moment
+//= require reflux
 //= require react
 //= require react_router
 //= require react_bootstrap
 //= require_tree
-
 //= require react_router_ujs
 
 var Yak = Yak || {};
 Yak.Components = {};
 Yak.CONST = {};
+Yak.Stores = {};
