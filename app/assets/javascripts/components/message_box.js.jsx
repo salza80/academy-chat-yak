@@ -26,7 +26,8 @@ Yak.Components.MessageBox = React.createClass({
   },
   componentWillUpdate: function() {
     var node = React.findDOMNode(this.refs.messageListCol);
-    this.wasAtBottomMessageList =  node.scrollTop + node.offsetHeight === node.scrollHeight
+    var scrollOffset = (node.scrollTop + node.offsetHeight) - node.scrollHeight
+    this.wasAtBottomMessageList =  (scrollOffset > -5 && scrollOffset < 5)
   },
   componentWillReceiveProps: function(props) {
     this.fetchMessagesFromServer(props.params.room_id).then(function(data){
