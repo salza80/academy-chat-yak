@@ -8,7 +8,6 @@ Yak.Components.RoomBox = React.createClass({
   },
   onRoomListChange: function(data){
     this.setState({chat_rooms: data.chat_rooms});
-    console.log(this.findRoom(data.chat_rooms, "id", this.getParams().room_id))
     if (this.getParams().room_id === undefined){
       this.selectFirstRoom();
     } else if (this.new_room_name !== undefined){
@@ -18,7 +17,6 @@ Yak.Components.RoomBox = React.createClass({
         this.new_room_name = undefined;
       }
     } else if (this.findRoom(data.chat_rooms, "id", this.getParams().room_id) === undefined){
-      console.log("here")
       this.selectFirstRoom();
     }
   },
@@ -43,15 +41,10 @@ Yak.Components.RoomBox = React.createClass({
   findRoom: function(data, property, value) {
     var i;
     for (i = 0; i < data.length; i = i+1) { 
-      console.log("start")
-      console.log(value)
-      console.log("loop")
-      console.log(data[i][property] )
       if (data[i][property] == value){
         return data[i]
       }
     }
-    console.log("end loop")
     return undefined;
   },
   handleAddRoom: function(data) {

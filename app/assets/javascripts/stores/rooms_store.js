@@ -8,11 +8,11 @@ Yak.Stores.RoomsStore = Reflux.createStore({
         {eventName: "remove_room", callback: this.handlePusherRemoveRoom}
       ]
     );
-    this.RoomsPusher = Yak.PusherManager.channelGroup["Rooms"]
-    this.RoomsPusher.subscribe('chat_rooms')
+    this.RoomsPusher = Yak.PusherManager.channelGroup.Rooms;
+    this.RoomsPusher.subscribe('chat_rooms');
   },
   getInitialState: function() {
-    return {chat_rooms: [] }
+    return {chat_rooms: [] };
   },
   fetchRoomsFromServer: function() {
     return Yak.backend.fetch('chat_rooms.json').then(function(data) {
@@ -25,7 +25,7 @@ Yak.Stores.RoomsStore = Reflux.createStore({
     this.fetchRoomsFromServer();
   },
   onAddRoom: function(chat_room) {
-    Yak.backend.postJSON('chat_rooms.json', chat_room)
+    Yak.backend.postJSON('chat_rooms.json', chat_room);
   },
   handlePusherNewRoom: function(new_chat_room){
     this.data = {chat_rooms: this.data.chat_rooms.concat(new_chat_room)};
