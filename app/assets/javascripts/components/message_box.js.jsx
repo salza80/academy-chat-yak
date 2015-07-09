@@ -67,11 +67,8 @@ Yak.Components.MessageBox = React.createClass({
     node.scrollTop = this.scrollTop + (node.scrollHeight - this.scrollHeight);
   },
   getUserOnlineDesc: function(){
-     user_desc = undefined
-    if (this.state.users.length > 1){
-      user_desc = " users online"
-    } else { user_desc = " user online"}
-    return this.state.users.length.toString() + " " +  user_desc
+    user_desc = this.state.users.length > 1 ? " users online" : " user online";
+    return this.state.users.length.toString()  +  user_desc
   },
   handleMessageSubmit: function(message) {
     Yak.backend.postJSON('chat_rooms/' + this.state.selected_room.id + '/messages.json', message)
