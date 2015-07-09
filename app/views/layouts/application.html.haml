@@ -2,12 +2,17 @@
 %html
   %head
     %title Yak
+    = javascript_tag do
+      var Yak = Yak || {};
+      Yak.Components = {};
+      Yak.CONST = {};
+      Yak.Stores = {};
+      Yak.Actions = {};
+      Yak.CONST.PUSHER_KEY =  '#{ENV['PUSHER_KEY']}'
+      Yak.CONST.CSRF_TOKEN  = '#{form_authenticity_token}'
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
-    = javascript_tag do
-      Yak.CONST.PUSHER_KEY =  '#{ENV['PUSHER_KEY']}'
-      Yak.CONST.CSRF_TOKEN  = '#{form_authenticity_token}'
   %body
     / = react_component 'Yak.Components.Header', user: current_user
     = yield

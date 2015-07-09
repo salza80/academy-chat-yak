@@ -4,30 +4,20 @@ var State = ReactRouter.State;
 Yak.Components.RoomBox = React.createClass({
   mixins: [Navigation, State ],
   getInitialState: function() {
-    return {chat_rooms: [], modalOpened: false};
+    return {chat_rooms: []};
+  },
+  onRoomListChange: function(data){
+    this.setState({chat_rooms: data.chat_rooms});
+    if (this.getParams().room_id === undefined && data.chat_rooms.length > 0){
+      this.selectFirstRoom();
+    }
   },
   componentDidMount: function() {
-    Yak.PusherManager.addChannelGroup('Rooms',
-      [
-        {eventName: "new_room", callback:  this.handlePusherNewRoom},
-        {eventName: "remove_room", callback: this.handlePusherRemoveRoom}
-      ]
-    );
-    this.RoomsPusher = Yak.PusherManager.channelGroup["Rooms"]
-    this.RoomsPusher.subscribe('chat_rooms')
-    this.fetchRoomsFromServer();
+    this.unsubscribe = Yak.Stores.RoomsStore.listen(this.onRoomListChange);
+    Yak.Actions.RoomActions.Load();
   },  
   componentWillUnmount: function() {
-    this.RoomsPusher.unsubscribe();
-  },
-  fetchRoomsFromServer: function() {
-    return Yak.backend.fetch('chat_rooms.json').then(function(data) {
-      this.setState({chat_rooms: data.chat_rooms});
-      if (this.getParams().room_id === undefined && data.chat_rooms.length > 0){
-        this.transitionTo('Room', {room_id: data.chat_rooms[0].id});
-      }
-      return Promise.resolve(data);
-    }.bind(this))
+    this.unsubscribe();
   },
   scroll: function(){
     var node = this.getDOMNode();
@@ -47,24 +37,21 @@ Yak.Components.RoomBox = React.createClass({
   },
   handleAddRoom: function(chat_room) {
     this.addedRoom = chat_room.chat_room.name
-    Yak.backend.postJSON('chat_rooms.json', chat_room)
+    Yak.Actions.RoomActions.AddRoom(chat_room.chat_room);
   },
-  handlePusherNewRoom: function(new_chat_room){
-    this.setState({chat_rooms: this.state.chat_rooms.concat(new_chat_room)});
-    if (this.addedRoom == new_chat_room.name){
-      this.transitionTo('Room', {room_id: new_chat_room.id});
-      this.scroll();
-      this.addedRoom=""
-    }
+  handleRoomAdded: function(new_chat_room){
+  // if (this.addedRoom == new_chat_room.name){
+  //     this.transitionTo('Room', {room_id: new_chat_room.id});
+  //     this.scroll();
+  //     this.addedRoom=""
+  //   }
   },
   handleRemoveRoom: function(chat_room) {
-    Yak.backend.delete('chat_rooms/' + chat_room.id);
-  },
-  handlePusherRemoveRoom: function(chat_room) {
-    this.fetchRoomsFromServer().then(function(data) {
-      this.redirectFromRemovedRoom(chat_room);
-    }.bind(this));
+    Yak.Actions.RoomActions.RemoveRoom(chat_room)
     this.hideModal();
+  },
+  handleRoomRemoved: function(chat_room) {
+    this.redirectFromRemovedRoom(chat_room); 
   },
   hideModal: function() {
     React.unmountComponentAtNode(document.getElementById('modal'));

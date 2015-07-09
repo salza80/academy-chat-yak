@@ -2,7 +2,7 @@ var Modal = ReactBootstrap.Modal;
 
 var ConfirmRemoveModal = React.createClass({
   removeRoom: function() {
-    this.props.onConfirmClick(this.props.room, this.props.index)
+    this.props.onConfirmClick(this.props.room)
   },
   render: function() {
     return(
