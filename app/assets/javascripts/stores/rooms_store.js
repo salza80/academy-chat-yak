@@ -12,15 +12,12 @@ Yak.Stores.RoomsStore = Reflux.createStore({
     this.RoomsPusher.subscribe('chat_rooms')
   },
   getInitialState: function() {
-    this.fetchRoomsFromServer().then(function(){
-      return this.chat_rooms;
-    }.bind(this));
+    return {chat_rooms: [] }
   },
   fetchRoomsFromServer: function() {
     return Yak.backend.fetch('chat_rooms.json').then(function(data) {
-      console.log(data)
-      this.chat_rooms = {chat_rooms: data.chat_rooms};
-      this.trigger(this.chat_rooms)
+      this.data = {chat_rooms: data.chat_rooms};
+       this.trigger(this.data);
       return Promise.resolve(this.chat_rooms);
     }.bind(this));
   },
@@ -28,19 +25,16 @@ Yak.Stores.RoomsStore = Reflux.createStore({
     this.fetchRoomsFromServer();
   },
   onAddRoom: function(chat_room) {
-    console.log(chat_room)
-    Yak.backend.postJSON('chat_rooms.json', chat_room).then(function(){
-      this.fetchRoomsFromServer();
-    }.bind(this))
+    Yak.backend.postJSON('chat_rooms.json', chat_room)
   },
   handlePusherNewRoom: function(new_chat_room){
-    this.chat_rooms = {chat_rooms: this.chat_rooms.concat(new_chat_room)};
-    this.trigger(this.chat_rooms);
+    this.data = {chat_rooms: this.data.chat_rooms.concat(new_chat_room)};
+    this.trigger(this.data);
   },
   onRemoveRoom: function(chat_room) {
     Yak.backend.delete('chat_rooms/' + chat_room.id);
   },
   handlePusherRemoveRoom: function(chat_room) {
-    this.fetchRoomsFromServer()
+    this.fetchRoomsFromServer();
   }
 });

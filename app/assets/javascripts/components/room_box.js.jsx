@@ -8,7 +8,17 @@ Yak.Components.RoomBox = React.createClass({
   },
   onRoomListChange: function(data){
     this.setState({chat_rooms: data.chat_rooms});
-    if (this.getParams().room_id === undefined && data.chat_rooms.length > 0){
+    console.log(this.findRoom(data.chat_rooms, "id", this.getParams().room_id))
+    if (this.getParams().room_id === undefined){
+      this.selectFirstRoom();
+    } else if (this.new_room_name !== undefined){
+      new_room = this.findRoom(data.chat_rooms, "name", this.new_room_name)
+      if(new_room !== undefined){
+        this.transitionTo('Room', {room_id: new_room.id})
+        this.new_room_name = undefined;
+      }
+    } else if (this.findRoom(data.chat_rooms, "id", this.getParams().room_id) === undefined){
+      console.log("here")
       this.selectFirstRoom();
     }
   },
@@ -30,21 +40,23 @@ Yak.Components.RoomBox = React.createClass({
       this.transitionTo('NoRoom')
     };
   },
-  redirectFromRemovedRoom: function(chat_room) {
-    if (this.getParams().room_id == chat_room.id.toString()) {
-      this.selectFirstRoom();
+  findRoom: function(data, property, value) {
+    var i;
+    for (i = 0; i < data.length; i = i+1) { 
+      console.log("start")
+      console.log(value)
+      console.log("loop")
+      console.log(data[i][property] )
+      if (data[i][property] == value){
+        return data[i]
+      }
     }
+    console.log("end loop")
+    return undefined;
   },
-  handleAddRoom: function(chat_room) {
-    this.addedRoom = chat_room.chat_room.name
-    Yak.Actions.RoomActions.AddRoom(chat_room.chat_room);
-  },
-  handleRoomAdded: function(new_chat_room){
-  // if (this.addedRoom == new_chat_room.name){
-  //     this.transitionTo('Room', {room_id: new_chat_room.id});
-  //     this.scroll();
-  //     this.addedRoom=""
-  //   }
+  handleAddRoom: function(data) {
+    this.new_room_name = data.chat_room.name;
+    Yak.Actions.RoomActions.AddRoom(data.chat_room);
   },
   handleRemoveRoom: function(chat_room) {
     Yak.Actions.RoomActions.RemoveRoom(chat_room)
