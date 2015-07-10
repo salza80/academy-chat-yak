@@ -22,10 +22,19 @@ Yak.Components.RoomBox = React.createClass({
   },
   componentDidMount: function() {
     this.unsubscribe = Yak.Stores.RoomsStore.listen(this.onRoomListChange);
+    Yak.PusherManager.addChannelGroup('Rooms',
+      [
+        {eventName: "new_room", callback:  this.handlePusherNewRoom},
+        {eventName: "remove_room", callback: this.handlePusherRemoveRoom}
+      ]
+    );
+    this.RoomsPusher = Yak.PusherManager.channelGroup.Rooms;
+    this.RoomsPusher.subscribe('chat_rooms');
     Yak.Actions.RoomActions.Load();
   },  
   componentWillUnmount: function() {
     this.unsubscribe();
+    this.RoomsPusher.unsubscribe();
   },
   scroll: function(){
     var node = this.getDOMNode();
@@ -55,8 +64,11 @@ Yak.Components.RoomBox = React.createClass({
     Yak.Actions.RoomActions.RemoveRoom(chat_room)
     this.hideModal();
   },
-  handleRoomRemoved: function(chat_room) {
-    this.redirectFromRemovedRoom(chat_room); 
+  handlePusherNewRoom: function(new_room) {
+    Yak.Actions.RoomActions.PusherNewRoom(new_room);
+  },
+  handlePusherRemoveRoom: function(removed_room) {
+    Yak.Actions.RoomActions.PusherRemoveRoom(removed_room);
   },
   hideModal: function() {
     React.unmountComponentAtNode(document.getElementById('modal'));

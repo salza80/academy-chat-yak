@@ -1,40 +1,37 @@
 Yak.Stores.RoomsStore = Reflux.createStore({
 // this will set up listeners to all publishers in TodoActions, using onKeyname (or keyname) as callbacks
   listenables: [Yak.Actions.RoomActions],
-  init: function(){
-    Yak.PusherManager.addChannelGroup('Rooms',
-      [
-        {eventName: "new_room", callback:  this.handlePusherNewRoom},
-        {eventName: "remove_room", callback: this.handlePusherRemoveRoom}
-      ]
-    );
-    this.RoomsPusher = Yak.PusherManager.channelGroup.Rooms;
-    this.RoomsPusher.subscribe('chat_rooms');
+    init: function(){
   },
   getInitialState: function() {
-    return {chat_rooms: [] };
+    return {chat_rooms: []};
   },
-  fetchRoomsFromServer: function() {
-    return Yak.backend.fetch('chat_rooms.json').then(function(data) {
-      this.data = {chat_rooms: data.chat_rooms};
-       this.trigger(this.data);
-      return Promise.resolve(this.chat_rooms);
-    }.bind(this));
-  },
-  onLoad: function(){
-    this.fetchRoomsFromServer();
-  },
-  onAddRoom: function(chat_room) {
-    Yak.backend.postJSON('chat_rooms.json', chat_room);
-  },
-  handlePusherNewRoom: function(new_chat_room){
-    this.data = {chat_rooms: this.data.chat_rooms.concat(new_chat_room)};
+  onLoadCompleted: function(data) {
+    this.data = {chat_rooms: data.chat_rooms};
     this.trigger(this.data);
   },
-  onRemoveRoom: function(chat_room) {
-    Yak.backend.delete('chat_rooms/' + chat_room.id);
+  onAddRoomCompleted: function(new_chat_room) {
+    // this.data = {chat_rooms: this.data.chat_rooms.concat(new_chat_room)};
+    // this.trigger(this.data);
   },
-  handlePusherRemoveRoom: function(chat_room) {
-    this.fetchRoomsFromServer();
+  onAddRoomFailed: function(chat_rooms) {
+    //
+  },
+  onRemoveRoomCompleted: function() {
+
+  },
+  onRemoveRoomFailed: function(){
+
+  },
+  onPusherNewRoom: function(new_room){
+    this.data = {chat_rooms: this.data.chat_rooms.concat(new_room)};
+    this.trigger(this.data);
+  },
+  onPusherRemoveRoom: function(removed_room){
+    var rooms = this.data.chat_rooms.filter(function(room){
+      return room.id !== removed_room.id;
+    });
+    this.data = {chat_rooms: rooms};
+    this.trigger(this.data);
   }
 });
