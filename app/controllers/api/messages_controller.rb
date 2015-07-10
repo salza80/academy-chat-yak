@@ -34,6 +34,6 @@ class Api::MessagesController < ApplicationController
   end
 
   def set_chat_room
-    @chat_room = ChatRoom.find(params[:chat_room_id])
+    @chat_room = ChatRoom.active.find(params[:chat_room_id])
   end
 end
