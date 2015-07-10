@@ -6,19 +6,11 @@ Yak.Components.RoomBox = React.createClass({
   getInitialState: function() {
     return {chat_rooms: []};
   },
+  componentWillReceiveProps: function(props) {
+   this.checkSelectedRoom();
+  },
   onRoomListChange: function(data){
-    this.setState({chat_rooms: data.chat_rooms});
-    if (this.getParams().room_id === undefined){
-      this.selectFirstRoom();
-    } else if (this.new_room_name !== undefined){
-      new_room = this.findRoom(data.chat_rooms, "name", this.new_room_name)
-      if(new_room !== undefined){
-        this.transitionTo('Room', {room_id: new_room.id})
-        this.new_room_name = undefined;
-      }
-    } else if (this.findRoom(data.chat_rooms, "id", this.getParams().room_id) === undefined){
-      this.selectFirstRoom();
-    }
+    this.setState({chat_rooms: data.chat_rooms}, this.checkSelectedRoom);
   },
   componentDidMount: function() {
     this.unsubscribe = Yak.Stores.RoomsStore.listen(this.onRoomListChange);
@@ -36,22 +28,42 @@ Yak.Components.RoomBox = React.createClass({
     this.unsubscribe();
     this.RoomsPusher.unsubscribe();
   },
+  checkSelectedRoom: function(ignoreDefaultRoot) {
+    if (this.getParams().room_id === undefined){
+      this._selectFirstRoom();
+      return;
+    } 
+    if (this.new_room_name !== undefined){
+      new_room = this._findRoom("name", this.new_room_name)
+      if(new_room !== undefined){
+        this.transitionTo('Room', {room_id: new_room.id})
+        this.new_room_name = undefined;
+      }
+    } else {
+      this._checkRoomExists()
+    }
+  },
   scroll: function(){
     var node = this.getDOMNode();
     node.scrollTop = node.scrollHeight;
   },
-  selectFirstRoom: function() {
+  _checkRoomExists: function(){
+    if (this._findRoom("id", this.getParams().room_id) === undefined){
+      this._selectFirstRoom();
+    }
+  },
+  _selectFirstRoom: function() {
     if (this.state.chat_rooms.length > 0) {
       this.transitionTo('Room', {room_id: this.state.chat_rooms[0].id})
     } else {
       this.transitionTo('NoRoom')
     };
   },
-  findRoom: function(data, property, value) {
+  _findRoom: function(property, value) {
     var i;
-    for (i = 0; i < data.length; i = i+1) { 
-      if (data[i][property] == value){
-        return data[i]
+    for (i = 0; i < this.state.chat_rooms.length; i = i+1) { 
+      if (this.state.chat_rooms[i][property] == value){
+        return this.state.chat_rooms[i]
       }
     }
     return undefined;
