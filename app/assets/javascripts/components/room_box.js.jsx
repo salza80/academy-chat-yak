@@ -4,7 +4,7 @@ var State = ReactRouter.State;
 Yak.Components.RoomBox = React.createClass({
   mixins: [Navigation, State ],
   getInitialState: function() {
-    return {chat_rooms: []};
+    return {chat_rooms: [], ShowDeleteConfirmModal: false, ShowAddConfirmModal: false};
   },
   componentWillReceiveProps: function(props) {
    this.checkSelectedRoom();
@@ -23,6 +23,7 @@ Yak.Components.RoomBox = React.createClass({
     this.RoomsPusher = Yak.PusherManager.channelGroup.Rooms;
     this.RoomsPusher.subscribe('chat_rooms');
     Yak.Actions.RoomActions.Load();
+    this.confirmModelEle=  React.findDOMNode(this.refs.modal)
   },  
   componentWillUnmount: function() {
     this.unsubscribe();
@@ -33,11 +34,11 @@ Yak.Components.RoomBox = React.createClass({
       this._selectFirstRoom();
       return;
     } 
-    if (this.new_room_name !== undefined){
-      new_room = this._findRoom("name", this.new_room_name)
+    if (this.addRoom !== undefined){
+      new_room = this._findRoom("name", this.addRoom.name)
       if(new_room !== undefined){
         this.transitionTo('Room', {room_id: new_room.id})
-        this.new_room_name = undefined;
+        this.addRoom = undefined;
       }
     } else {
       this._checkRoomExists()
@@ -68,12 +69,20 @@ Yak.Components.RoomBox = React.createClass({
     }
     return undefined;
   },
-  handleAddRoom: function(data) {
-    this.new_room_name = data.chat_room.name;
-    Yak.Actions.RoomActions.AddRoom(data.chat_room);
+  handleRemoveRoomClick: function(chat_room){
+    this.removeRoom = chat_room
+    this.setState({ShowDeleteConfirmModal:true})
   },
-  handleRemoveRoom: function(chat_room) {
-    Yak.Actions.RoomActions.RemoveRoom(chat_room)
+  handleAddRoomClick: function(chat_room){
+    this.addRoom = chat_room
+    this.setState({ShowAddConfirmModal:true})
+  },
+  handleAddRoom: function() {
+    Yak.Actions.RoomActions.AddRoom(this.addRoom);
+    this.hideModal();
+  },
+  handleRemoveRoom: function() {
+    Yak.Actions.RoomActions.RemoveRoom(this.removeRoom)
     this.hideModal();
   },
   handlePusherNewRoom: function(new_room) {
@@ -83,14 +92,23 @@ Yak.Components.RoomBox = React.createClass({
     Yak.Actions.RoomActions.PusherRemoveRoom(removed_room);
   },
   hideModal: function() {
-    React.unmountComponentAtNode(document.getElementById('modal'));
+    this.setState({ShowDeleteConfirmModal:false, ShowAddConfirmModal:false})
   },
-  confirmRemoveModalOpen: function(chat_room, index) {
-    React.render(<ConfirmRemoveModal
-      hideModal={this.hideModal}
-      onConfirmClick={this.handleRemoveRoom}
-      room={chat_room}
-      index={index} />, document.getElementById('modal'));
+  getModal: function() {
+    var modal;
+    if (this.state.ShowDeleteConfirmModal){ 
+      modal = <ConfirmModal onHide={this.hideModal} 
+      onConfirmClick={this.handleRemoveRoom} 
+      onCancelClick= {this.hideModal} 
+      message="Are you sure you want to delete this room?" />
+    }
+    if (this.state.ShowAddConfirmModal){ 
+      modal = <ConfirmModal onHide={this.hideModal} 
+      onConfirmClick={this.handleAddRoom} 
+      onCancelClick= {this.hideModal} 
+      message= "Are you sure you want to add a new room?" />
+    }
+    return modal;
   },
   render: function() {
     return (
@@ -98,11 +116,11 @@ Yak.Components.RoomBox = React.createClass({
       <h3>Rooms</h3>
       <Yak.Components.RoomList
         chat_rooms={this.state.chat_rooms}
-        onRemoveRoomClick={this.confirmRemoveModalOpen} />
+        onRemoveRoomClick={this.handleRemoveRoomClick} />
       <div className="add-room-form">
-        <Yak.Components.RoomForm onAddRoomClick={this.handleAddRoom} />
+        <Yak.Components.RoomForm onAddRoomClick={this.handleAddRoomClick} />
       </div>
-      <div id="modal" />
+      <div id="modal" ref="modal" >  {this.getModal()} </div>
     </div>
     );
   }

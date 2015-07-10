@@ -9,6 +9,8 @@ feature 'pusher_actions' do
   scenario 'User adds new room' do
     @session1.fill_in 'Room name', with: 'New room'
     @session1.click_button 'Add'
+    expect(@session1).not_to have_text('Are you sure you want to add a new room?')
+    @session1.click_button('Yes')
     expect(@session1).to have_css('span', text: 'New room')
     # test it clicks on new room automatically
     expect(@session1).to have_css('h3', text: 'New room')
@@ -25,7 +27,7 @@ feature 'pusher_actions' do
     @session3.find('.room-list-item', text: 'Berlin').click
     @session1.find('.room-list-item', text: 'Empty Room').find('.glyphicon').click
     @session1.click_button('Yes')
-    expect(@session1).not_to have_text('Are you sure?')
+    expect(@session1).not_to have_text('Are you sure you want to delete this room?')
     expect(@session1).not_to have_text('Empty Room')
     expect(@session1).to have_css('h3', text: 'Roomie')
     # test other users in the room have exited
