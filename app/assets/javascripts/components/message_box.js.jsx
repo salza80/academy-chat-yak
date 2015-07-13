@@ -4,8 +4,22 @@ Yak.Components.MessageBox = React.createClass({
       messages: [],
       selected_room: {"id": 0, "name": "", "channel":""},
       all_messages_loaded: true,
-      users: []
+      users: [],
+      scroll: "down"
     };
+  },
+  onchange: function(data) {
+      this.setState({
+      messages: data.messages,
+      selected_room: data.selected_room,
+      all_messages_loaded: data.all_messages_loaded,
+      users: data.users,
+      scroll: data.scroll
+    }, this.onStateUpdated);
+  },
+  onStateUpdated: function(){
+    this.MessagesPusher.subscribe(this.state.selected_room.channel);
+    this.scrollMessages();
   },
   componentDidMount: function() {
     Yak.PusherManager.addChannelGroup('Messages',
@@ -17,11 +31,11 @@ Yak.Components.MessageBox = React.createClass({
       ] 
     )
     this.MessagesPusher = Yak.PusherManager.channelGroup["Messages"]
-    this.fetchMessagesFromServer(this.props.params.room_id).then(function(data){
-      this.scrollMessagesDown();
-    }.bind(this))
+    this.unsubscribe = Yak.Stores.MessagesStore.listen(this.onchange);
+    Yak.Actions.MessageActions.Load(this.props.params.room_id);
   },
   componentWillUnmount: function() {
+    this.unsubscribe();
     this.MessagesPusher.unsubscribe();
   },
   componentWillUpdate: function() {
@@ -30,32 +44,31 @@ Yak.Components.MessageBox = React.createClass({
     this.wasAtBottomMessageList =  (scrollOffset > -5 && scrollOffset < 5)
   },
   componentWillReceiveProps: function(props) {
-    this.fetchMessagesFromServer(props.params.room_id).then(function(data){
-      this.scrollMessagesDown();
-    }.bind(this))
-  },
-  fetchMessagesFromServer: function(room_id) {
-    return Yak.backend.fetch('chat_rooms/' + room_id  + '/messages.json').then(function(data){
-      this.setState({
-        selected_room: data.selected_room,
-        messages: data.messages,
-        all_messages_loaded: data.all_messages,
-        users: []
-      }); 
-      this.MessagesPusher.subscribe(data.selected_room.channel);
-      return Promise.resolve(data);
-    }.bind(this))
+    Yak.Actions.MessageActions.Load(props.params.room_id);
   },
   fetchPartFromServer: function() {
     var size = this.state.messages.length;
     var last_id = size > 0 ? this.state.messages[0].id : -1;
-    Yak.backend.fetch('chat_rooms/' + this.state.selected_room.id + '/messages.json?last_id=' + last_id).then(function (data) {
-      this.setState({messages: data.messages.concat(this.state.messages), all_messages_loaded: data.all_messages});
-      this.scrollMessagesUp;
-    }.bind(this))
+    Yak.Actions.MessageActions.LoadPart(this.state.selected_room.id, last_id)
   },
   addUsers: function(users){
     this.setState({users: this.state.users.concat(users)});
+  },
+  scrollMessages: function(){
+    switch (this.state.scroll)
+    {
+       case "up":
+        this.scrollMessagesUp();
+        break;
+       case "down":
+        this.scrollMessagesDown();
+        break;
+        case "downWhenAtBottom":
+        this.scrollMessagesDown(true);
+        break;
+       default: 
+        this.scrollMessagesDown();
+    }
   },
   scrollMessagesDown: function(onlyWhenAtBottom){
     var shouldScrollDown = true
@@ -72,11 +85,11 @@ Yak.Components.MessageBox = React.createClass({
     return this.state.users.length.toString()  +  user_desc
   },
   handleMessageSubmit: function(message) {
-    Yak.backend.postJSON('chat_rooms/' + this.state.selected_room.id + '/messages.json', message)
+    Yak.Actions.MessageActions.AddMessage(this.state.selected_room.id, message);
   },
   handleNewPusherMessage: function(message) {
-    this.setState({messages: this.state.messages.concat(message)});
-    this.scrollMessagesDown(true);
+    Yak.Actions.MessageActions.PusherNewMessage(message);
+    // this.scrollMessagesDown(true);
   },
   handlePresenceSubscriptionSucceeded: function(members) {
     var users = [];

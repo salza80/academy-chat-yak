@@ -4,4 +4,4 @@ end
 json.messages @messages do |message|
   json.partial! 'api/messages/message', message: message
 end
-json.all_messages @all_messages
+json.all_messages_loaded @all_messages_loaded
