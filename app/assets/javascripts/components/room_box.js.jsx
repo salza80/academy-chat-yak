@@ -35,7 +35,7 @@ Yak.Components.RoomBox = React.createClass({
       return;
     } 
     if (this.addRoom !== undefined){
-      new_room = this._findRoom("name", this.addRoom.name)
+      new_room = this._findRoom("name", this.addRoom.chat_room.name)
       if(new_room !== undefined){
         this.transitionTo('Room', {room_id: new_room.id})
         this.addRoom = undefined;
