@@ -2,7 +2,8 @@ Yak.Components.MessageForm = React.createClass
   handleSubmit: (e) ->
     e.preventDefault()
     body = React.findDOMNode(this.refs.body).value.trim()
-    this.props.onMessageSubmit({message:{body: body}})
+    message = {body: body}
+    Yak.Actions.MessageActions.AddMessage(this.props.selected_room.id, message);
     React.findDOMNode(this.refs.body).value = ''
   render: ->
     <form className="message-form" onSubmit={this.handleSubmit}>
