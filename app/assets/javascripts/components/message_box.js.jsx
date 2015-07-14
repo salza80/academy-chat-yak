@@ -18,7 +18,9 @@ Yak.Components.MessageBox = React.createClass({
     }, this.onStateUpdated);
   },
   onStateUpdated: function(){
-    this.MessagesPusher.subscribe(this.state.selected_room.channel);
+    if (this.MessagesPusher.channelName !== this.state.selected_room.channel){
+      this.MessagesPusher.subscribe(this.state.selected_room.channel);
+    }
     this.scrollMessages();
   },
   componentDidMount: function() {
@@ -50,9 +52,6 @@ Yak.Components.MessageBox = React.createClass({
     var size = this.state.messages.length;
     var last_id = size > 0 ? this.state.messages[0].id : -1;
     Yak.Actions.MessageActions.LoadPart(this.state.selected_room.id, last_id)
-  },
-  addUsers: function(users){
-    this.setState({users: this.state.users.concat(users)});
   },
   scrollMessages: function(){
     switch (this.state.scroll)
@@ -89,25 +88,15 @@ Yak.Components.MessageBox = React.createClass({
   },
   handleNewPusherMessage: function(message) {
     Yak.Actions.MessageActions.PusherNewMessage(message);
-    // this.scrollMessagesDown(true);
   },
   handlePresenceSubscriptionSucceeded: function(members) {
-    var users = [];
-     members.each(function(member) {
-      users.push({id: member.id, name: member.info.name});
-    });
-    this.addUsers(users);
+    Yak.Actions.MessageActions.LoadUserList(members);
   },
   handlePresenceMemberAdded:function(member) {
-    var users = [];
-    users.push({id: member.id, name: member.info.name});
-   this.addUsers(users);
-  },
+    Yak.Actions.MessageActions.UserJoinsRoom(member)
+   },
   handlePresenceMemberRemoved:function(member) {
-   users = this.state.users.filter(function(user){
-      return user.id !== member.id
-   });
-    this.setState({users: users});
+    Yak.Actions.MessageActions.UserLeavesRoom(member);
   },
   render: function() {
     var messageForm, olderMessagesLink;

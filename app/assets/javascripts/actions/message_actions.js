@@ -1,5 +1,8 @@
 Yak.Actions.MessageActions = Reflux.createActions([
-  "PusherNewMessage"
+  "PusherNewMessage",
+  "LoadUserList",
+  "UserJoinsRoom",
+  "UserLeavesRoom"
 ]);
 
 // this creates 'load', 'load.completed' and 'load.failed'

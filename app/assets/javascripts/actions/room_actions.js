@@ -14,8 +14,6 @@ Yak.Actions.RoomActions.Load = Reflux.createAction(
   { asyncResult: true }
 );
 
-
-
 Yak.Actions.RoomActions.AddRoom.listen( function(chat_room) {
   Yak.backend.postJSON('chat_rooms.json', chat_room)
   .then( this.completed )

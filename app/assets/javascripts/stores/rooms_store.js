@@ -11,8 +11,7 @@ Yak.Stores.RoomsStore = Reflux.createStore({
     this.trigger(this.data);
   },
   onAddRoomCompleted: function(new_chat_room) {
-    // this.data = {chat_rooms: this.data.chat_rooms.concat(new_chat_room)};
-    // this.trigger(this.data);
+ 
   },
   onAddRoomFailed: function(chat_rooms) {
     //
