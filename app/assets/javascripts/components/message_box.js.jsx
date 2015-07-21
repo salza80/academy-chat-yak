@@ -51,7 +51,12 @@ Yak.Components.MessageBox = React.createClass({
   fetchPartFromServer: function() {
     var size = this.state.messages.length;
     var last_id = size > 0 ? this.state.messages[0].id : -1;
-    Yak.Actions.MessageActions.LoadPart(this.state.selected_room.id, last_id)
+    var search = React.findDOMNode(this.refs.search).value.trim();
+    Yak.Actions.MessageActions.LoadPart(this.state.selected_room.id, last_id, search)
+  },
+  filterMessages: function() {
+    var search = React.findDOMNode(this.refs.search).value.trim();
+    Yak.Actions.MessageActions.LoadFiltered(this.state.selected_room.id, search);
   },
   scrollMessages: function(){
     switch (this.state.scroll)
@@ -110,7 +115,11 @@ Yak.Components.MessageBox = React.createClass({
       <div className="container-fluid container message-box">
         <div className ='row'>
           <div className='col-sm-10 message-list-col' ref="messageListCol">
-           <h3>{this.state.selected_room.name} - {this.getUserOnlineDesc()}</h3>
+           <div className='messages-header'>
+              <h3>{this.state.selected_room.name} - {this.getUserOnlineDesc()}</h3>
+              <span className="glyphicon glyphicon-search" onClick={this.filterMessages} />
+              <input type='text' ref='search' placeholder="Search message" />
+            </div>
            {olderMessagesLink}
           <Yak.Components.MessageList messages={this.state.messages} />
           {messageForm}            

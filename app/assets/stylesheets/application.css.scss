@@ -114,6 +114,23 @@ body {
   padding-right: 2px;
 }
 
+.messages-header {
+  h3 {
+    display: inline-block;
+  }
+
+  input {
+    float: right;
+    width: 30%;
+  }
+
+  .glyphicon {
+    float: right;
+    cursor: pointer;
+    padding: 5px;
+  }
+}
+
 .message-box-container {
   height: 100%;
 }

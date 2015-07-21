@@ -28,6 +28,25 @@ feature 'Rooms management' do
     expect(page).to have_css('div.message', count: 25)
   end
 
+  scenario 'Filter messages' do
+    create(:message, body: 'Welcome to Melbourne', chat_room: ChatRoom.find_by_name('Melbourne'))
+    find('.room-list-item', text: 'Melbourne').click
+    fill_in 'Search message', with: 'Melbourne'
+    find('.glyphicon-search').click
+    expect(page).to have_text('Welcome to Melbourne')
+    expect(page).not_to have_text('Hi!')
+  end
+
+  scenario 'Load only matching older messages' do
+    ChatRoom.find_by_name('Melbourne').messages = create_list(:message, 25, body: 'Bye!')
+    find('.room-list-item', text: 'Melbourne').click
+    fill_in 'Search message', with: 'Bye!'
+    find('.glyphicon-search').click
+    find('a', text: 'Get older messages').click
+    expect(page).to have_text('Bye!')
+    expect(page).not_to have_text('Hi!')
+  end
+
   scenario 'Not empty room is kept in database on remove' do
     find('.room-list-item', text: 'Roomie').find('.glyphicon').click
     click_button('Yes')

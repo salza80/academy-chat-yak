@@ -22,7 +22,14 @@ Yak.Stores.MessagesStore = Reflux.createStore({
     this.trigger(this.data);
   },
   onLoadPartCompleted: function(data){
+    this.data.messages = data.messages.concat(this.data.messages);
+    this.data.all_messages_loaded = data.all_messages_loaded;
+    this.data.scroll = "up";
+    this.trigger(this.data);
+  },
+  onLoadFilteredCompleted: function(data) {
     this.data.messages = data.messages;
+    this.data.all_messages_loaded = data.all_messages_loaded;
     this.data.scroll = "up";
     this.trigger(this.data);
   },
@@ -40,7 +47,7 @@ Yak.Stores.MessagesStore = Reflux.createStore({
   addUsers: function(users){
     this.data.users = this.data.users.concat(users);
   },
- onLoadUserList: function(members) {
+  onLoadUserList: function(members) {
     var users = [];
      members.each(function(member) {
       users.push({id: member.id, name: member.info.name});
