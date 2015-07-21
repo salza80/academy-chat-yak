@@ -88,9 +88,6 @@ Yak.Components.MessageBox = React.createClass({
     user_desc = this.state.users.length > 1 ? " users online" : " user online";
     return this.state.users.length.toString()  +  user_desc
   },
-  handleMessageSubmit: function(message) {
-    Yak.Actions.MessageActions.AddMessage(this.state.selected_room.id, message);
-  },
   handleNewPusherMessage: function(message) {
     Yak.Actions.MessageActions.PusherNewMessage(message);
   },
@@ -106,7 +103,7 @@ Yak.Components.MessageBox = React.createClass({
   render: function() {
     var messageForm, olderMessagesLink;
     if (this.props.params.room_id !== undefined) {
-      messageForm =  <Yak.Components.MessageForm onMessageSubmit={this.handleMessageSubmit} />
+      messageForm =  <Yak.Components.MessageForm selected_room={this.state.selected_room} />
       if (!this.state.all_messages_loaded) {
         olderMessagesLink = <a onClick={this.fetchPartFromServer}>Get older messages</a>
       }

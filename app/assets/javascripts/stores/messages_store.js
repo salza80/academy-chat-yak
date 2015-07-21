@@ -47,7 +47,7 @@ Yak.Stores.MessagesStore = Reflux.createStore({
   addUsers: function(users){
     this.data.users = this.data.users.concat(users);
   },
-  onLoadUserList: function(members) {
+ onLoadUserList: function(members) {
     var users = [];
      members.each(function(member) {
       users.push({id: member.id, name: member.info.name});
