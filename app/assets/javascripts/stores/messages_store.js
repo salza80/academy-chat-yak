@@ -62,7 +62,7 @@ Yak.Stores.MessagesStore = Reflux.createStore({
     this.trigger(this.data);
   },
   onUserLeavesRoom:function(member) {
-    var users = this.state.users.filter(function(user){
+    var users = this.data.users.filter(function(user){
       return user.id !== member.id;
    });
   this.data.users = users;
