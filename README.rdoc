@@ -1,8 +1,8 @@
 == README
 
-Online at: http://academy-chat-yak.herokuapp.com/
-
 = Academy Chat Yak
+http://academy-chat-yak.herokuapp.com/
+
 
 == Description
 
